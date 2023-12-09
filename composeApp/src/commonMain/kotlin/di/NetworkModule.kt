@@ -15,10 +15,10 @@ import org.koin.dsl.module
 
 
 val NetworkModule = module(createdAtStart = true) {
-    single { client }
+    single { httpService }
 }
 
-private val client = HttpClient {
+private val httpService = HttpClient {
     defaultRequest {
         url.takeFrom(URLBuilder().takeFrom("https://provinces.open-api.vn/api/"))
     }
