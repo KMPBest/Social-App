@@ -56,6 +56,9 @@ kotlin {
 
             // Ktor
             implementation(libs.ktor.client.core)
+            implementation(libs.ktor.negotiation)
+            implementation(libs.ktor.serialization)
+            implementation(libs.ktor.logging)
         }
     }
 }

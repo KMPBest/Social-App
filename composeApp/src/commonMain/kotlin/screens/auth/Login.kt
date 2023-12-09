@@ -18,6 +18,7 @@ import shared.UIComposable
 
 class Login() : Screen, UIComposable {
 
+
     @Composable
     override fun Content() {
         Render()
@@ -27,7 +28,6 @@ class Login() : Screen, UIComposable {
     override fun Render() {
         val greetingText by remember { mutableStateOf("screens.auth.Login") }
         val navigator = LocalNavigator.currentOrThrow
-
         Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
             Button(onClick = {
                 navigator.push(BottomNav())
