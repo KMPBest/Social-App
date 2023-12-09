@@ -15,28 +15,28 @@ import org.koin.dsl.module
 
 
 val NetworkModule = module(createdAtStart = true) {
-    single {
-        HttpClient {
-            defaultRequest {
-                url.takeFrom(URLBuilder().takeFrom("https://provinces.open-api.vn/api/"))
-            }
-            install(HttpTimeout) {
-                requestTimeoutMillis = 15_000
-            }
-            install(ContentNegotiation) {
-                json(Json {
-                    ignoreUnknownKeys = true
-                    isLenient = true
-                    prettyPrint = true
-                })
-            }
-            install(Logging) {
-                level = LogLevel.ALL
-                logger = object : Logger {
-                    override fun log(message: String) {
-                        println("[HttpClient] $message")
-                    }
-                }
+    single { client }
+}
+
+private val client = HttpClient {
+    defaultRequest {
+        url.takeFrom(URLBuilder().takeFrom("https://provinces.open-api.vn/api/"))
+    }
+    install(HttpTimeout) {
+        requestTimeoutMillis = 15_000
+    }
+    install(ContentNegotiation) {
+        json(Json {
+            ignoreUnknownKeys = true
+            isLenient = true
+            prettyPrint = true
+        })
+    }
+    install(Logging) {
+        level = LogLevel.ALL
+        logger = object : Logger {
+            override fun log(message: String) {
+                println("[HttpClient] $message")
             }
         }
     }
