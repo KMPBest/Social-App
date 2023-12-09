@@ -22,14 +22,20 @@ import cafe.adriel.voyager.navigator.tab.LocalTabNavigator
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabNavigator
 import screens.main.home.Home
-import screens.main.message.Messasge
+import screens.main.message.Message
 import screens.main.newPost.NewPost
 import screens.main.profile.Profile
 import screens.main.search.Search
+import shared.UIComposable
 
-class BottomNav(private val firstScreen: Tab = Home) : Screen {
+class BottomNav(private val firstScreen: Tab = Home()) : Screen, UIComposable {
     @Composable
     override fun Content() {
+        Render()
+    }
+
+    @Composable
+    override fun Render() {
         TabNavigator(firstScreen) {
             Surface(modifier = Modifier.fillMaxSize()) {
                 Scaffold(
@@ -41,11 +47,11 @@ class BottomNav(private val firstScreen: Tab = Home) : Screen {
                             backgroundColor = MaterialTheme.colors.background,
                             modifier = Modifier.height(56.dp),
                         ) {
-                            TabNavigationItem(Home)
-                            TabNavigationItem(Search)
-                            TabNavigationItem(NewPost)
-                            TabNavigationItem(Messasge)
-                            TabNavigationItem(Profile)
+                            TabNavigationItem(Home())
+                            TabNavigationItem(Search())
+                            TabNavigationItem(NewPost())
+                            TabNavigationItem(Message())
+                            TabNavigationItem(Profile())
                         }
                     },
                 )

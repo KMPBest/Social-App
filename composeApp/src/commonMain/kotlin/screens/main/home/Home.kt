@@ -19,7 +19,7 @@ import org.jetbrains.compose.resources.painterResource
 import screens.main.profile.Profile
 import shared.UIComposable
 
-object Home : Tab, UIComposable {
+class Home : Tab, UIComposable {
 
     @OptIn(ExperimentalResourceApi::class)
     override val options: TabOptions
@@ -41,7 +41,7 @@ object Home : Tab, UIComposable {
 
         Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
             Button(onClick = {
-                navigator.push(Profile)
+                navigator.push(Profile())
             }) {
                 Text("$greetingText!")
             }

@@ -16,7 +16,7 @@ import cafe.adriel.voyager.navigator.currentOrThrow
 import navigations.BottomNav
 import shared.UIComposable
 
-object Login : Screen, UIComposable {
+class Login() : Screen, UIComposable {
 
     @Composable
     override fun Content() {

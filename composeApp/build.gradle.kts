@@ -32,6 +32,12 @@ kotlin {
             implementation(libs.compose.ui)
             implementation(libs.compose.ui.tooling.preview)
             implementation(libs.androidx.activity.compose)
+
+            // Koin for Android
+            implementation(libs.koin.android)
+
+            // Ktor
+            implementation(libs.ktor.android)
         }
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -43,6 +49,13 @@ kotlin {
             // navigation library
             implementation(libs.voyager.navigator)
             implementation(libs.voyager.tab.navigator)
+
+            // Koin for Multiplatform
+            implementation(libs.koin.core)
+            implementation(libs.koin.compose)
+
+            // Ktor
+            implementation(libs.ktor.client.core)
         }
     }
 }
