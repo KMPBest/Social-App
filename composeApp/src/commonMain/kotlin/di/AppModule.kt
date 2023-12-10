@@ -2,7 +2,7 @@ package di
 
 import org.koin.core.context.startKoin
 
-val appModule = listOf(NetworkModule, ScreenModelModule)
+val appModule = listOf(networkModule, screenModelModule)
 
 fun initKoin() = startKoin {
     modules(appModule)
