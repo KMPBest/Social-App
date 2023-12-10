@@ -2,11 +2,11 @@ import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import cafe.adriel.voyager.navigator.CurrentScreen
 import cafe.adriel.voyager.navigator.Navigator
-import navigations.BottomNav
+import screens.auth.LoginScreen
 
 @Composable
 fun MainNav() {
-    Navigator(BottomNav()) {
+    Navigator(LoginScreen()) {
         Scaffold(
             content = {
                 CurrentScreen()

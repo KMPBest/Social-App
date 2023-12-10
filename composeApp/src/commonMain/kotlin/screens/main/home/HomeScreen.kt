@@ -24,7 +24,7 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import shared.UIComposable
 
-class Home : Tab, UIComposable, KoinComponent {
+class HomeScreen : Tab, UIComposable, KoinComponent {
 
     private val httpClient by inject<HttpClient>()
 

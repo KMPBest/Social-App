@@ -46,9 +46,11 @@ kotlin {
             @OptIn(ExperimentalComposeLibrary::class)
             implementation(compose.components.resources)
 
-            // navigation library
+            // Voyager
             implementation(libs.voyager.navigator)
             implementation(libs.voyager.tab.navigator)
+            implementation(libs.voyager.screenModel)
+            implementation(libs.voyager.koin)
 
             // Koin for Multiplatform
             implementation(libs.koin.core)

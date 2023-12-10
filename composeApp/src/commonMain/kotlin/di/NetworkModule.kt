@@ -14,7 +14,7 @@ import kotlinx.serialization.json.Json
 import org.koin.dsl.module
 
 
-val NetworkModule = module(createdAtStart = true) {
+val NetworkModule = module {
     single { httpService }
 }
 
@@ -33,9 +33,10 @@ private val httpService = HttpClient {
         })
     }
     install(Logging) {
-        level = LogLevel.ALL
+        level = LogLevel.INFO
         logger = object : Logger {
             override fun log(message: String) {
+                println("--------------------------------------------------")
                 println("[HttpClient] $message")
             }
         }

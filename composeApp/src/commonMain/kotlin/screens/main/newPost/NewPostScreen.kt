@@ -1,4 +1,4 @@
-package screens.main.profile
+package screens.main.newPost
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -16,18 +16,17 @@ import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabOptions
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
-import screens.main.home.Home
+import screens.main.home.HomeScreen
 import shared.UIComposable
 
-class Profile : Tab, UIComposable {
-
+class NewPostScreen : Tab, UIComposable {
     @OptIn(ExperimentalResourceApi::class)
     override val options: TabOptions
         @Composable
         get() = TabOptions(
             index = 1u,
-            icon = painterResource("bottomNavIcon/profile.xml"),
-            title = "Profile",
+            icon = painterResource("bottomNavIcon/new-post.xml"),
+            title = "Add Post",
         )
 
     @Composable
@@ -37,16 +36,15 @@ class Profile : Tab, UIComposable {
 
     @Composable
     override fun Render() {
-        val greetingText by remember { mutableStateOf("screens.main.profile") }
+        val greetingText by remember { mutableStateOf("screens.main.new-post") }
         val navigator = LocalNavigator.currentOrThrow
 
         Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
             Button(onClick = {
-                navigator.push(Home())
+                navigator.push(HomeScreen())
             }) {
                 Text("$greetingText!")
             }
         }
     }
 }
-

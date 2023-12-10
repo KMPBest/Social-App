@@ -1,4 +1,4 @@
-package screens.main.newPost
+package screens.auth
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -10,24 +10,14 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.koin.getScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
-import cafe.adriel.voyager.navigator.tab.Tab
-import cafe.adriel.voyager.navigator.tab.TabOptions
-import org.jetbrains.compose.resources.ExperimentalResourceApi
-import org.jetbrains.compose.resources.painterResource
-import screens.main.home.Home
+import navigations.BottomNav
 import shared.UIComposable
 
-class NewPost : Tab, UIComposable {
-    @OptIn(ExperimentalResourceApi::class)
-    override val options: TabOptions
-        @Composable
-        get() = TabOptions(
-            index = 1u,
-            icon = painterResource("bottomNavIcon/new-post.xml"),
-            title = "Add Post",
-        )
+class LoginScreen : Screen, UIComposable {
 
     @Composable
     override fun Content() {
@@ -36,15 +26,17 @@ class NewPost : Tab, UIComposable {
 
     @Composable
     override fun Render() {
-        val greetingText by remember { mutableStateOf("screens.main.new-post") }
+        val greetingText by remember { mutableStateOf("screens.auth.Login") }
         val navigator = LocalNavigator.currentOrThrow
-
+        val loginScreenModel = getScreenModel<LoginScreenModel>()
         Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
             Button(onClick = {
-                navigator.push(Home())
+                loginScreenModel.testLog()
+                navigator.push(BottomNav())
             }) {
                 Text("$greetingText!")
             }
         }
+
     }
 }
