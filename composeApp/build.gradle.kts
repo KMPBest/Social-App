@@ -39,6 +39,14 @@ kotlin {
             // Ktor
             implementation(libs.ktor.android)
         }
+
+        iosMain.dependencies {
+            // Ktor
+            implementation(libs.ktor.ios)
+
+            // this dependency may be missing some libs because i don't have a mac :<
+        }
+
         commonMain.dependencies {
             implementation(compose.runtime)
             implementation(compose.foundation)

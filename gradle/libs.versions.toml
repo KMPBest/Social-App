@@ -28,7 +28,7 @@ ktor-android = { group = "io.ktor", name = "ktor-client-android", version.ref = 
 ktor-negotiation = { group = "io.ktor", name = "ktor-client-content-negotiation", version.ref = "ktor-version" }
 ktor-serialization = { group = "io.ktor", name = "ktor-serialization-kotlinx-json", version.ref = "ktor-version" }
 ktor-logging = { group = "io.ktor", name = "ktor-client-logging", version.ref = "ktor-version" }
-#ktor-ios = { group = "io.ktor", name = "ktor-client-darwin", version.ref = "ktor-version" }
+ktor-ios = { group = "io.ktor", name = "ktor-client-darwin", version.ref = "ktor-version" }
 
 #Koin
 koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
