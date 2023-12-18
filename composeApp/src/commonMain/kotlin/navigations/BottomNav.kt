@@ -58,7 +58,6 @@ class BottomNav(private val firstScreen: Tab = HomeScreen()) : Screen, UIComposa
             }
         }
     }
-
 }
 
 @Composable

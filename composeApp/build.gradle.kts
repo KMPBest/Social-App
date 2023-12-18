@@ -51,8 +51,7 @@ kotlin {
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material)
-            @OptIn(ExperimentalComposeLibrary::class)
-            implementation(compose.components.resources)
+            @OptIn(ExperimentalComposeLibrary::class) implementation(compose.components.resources)
 
             // Voyager
             implementation(libs.voyager.navigator)
