@@ -17,7 +17,7 @@ val networkModule = module {
     single {
         HttpClient {
             defaultRequest {
-                url.takeFrom(URLBuilder().takeFrom("https://provinces.open-api.vn/api/"))
+                url.takeFrom(URLBuilder().takeFrom("https://fakestoreapi.com/"))
             }
             install(HttpTimeout) {
                 requestTimeoutMillis = 15_000
@@ -38,7 +38,6 @@ val networkModule = module {
                     }
                 }
             }
-
         }
     }
 }
