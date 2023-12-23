@@ -8,7 +8,7 @@ import io.ktor.client.request.setBody
 import kotlinx.serialization.json.Json
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
-import utils.ServiceResult
+import utils.AsyncResult
 
 class UserService : KoinComponent {
 
@@ -18,43 +18,33 @@ class UserService : KoinComponent {
         const val USER = "users"
     }
 
-    suspend fun getUsers(): ServiceResult {
+    private val json = Json {
+        ignoreUnknownKeys = true
+    }
+
+    suspend fun getUsers(): AsyncResult<List<User>> {
         return try {
-            ServiceResult.Loading(true)
-            val response: List<User> = Json.decodeFromString(
-                httpClient.get(USER).body()
-            )
-            ServiceResult.Success(response)
-            ServiceResult.Loading(false)
+            AsyncResult.Success(httpClient.get(USER).body<List<User>>())
         } catch (e: Exception) {
-            ServiceResult.Error(e.message ?: "An error occurred")
-            ServiceResult.Loading(false)
+            AsyncResult.Error(e)
         }
     }
 
-    suspend fun getUser(id: Int): ServiceResult {
+    suspend fun getUser(id: Int): AsyncResult<User> {
         return try {
-            ServiceResult.Loading(true)
-            val response: User = httpClient.get("$USER/$id").body()
-            ServiceResult.Success(response)
-            ServiceResult.Loading(false)
+            AsyncResult.Success(httpClient.get("$USER/$id").body<User>())
         } catch (e: Exception) {
-            ServiceResult.Error(e.message ?: "An error occurred")
-            ServiceResult.Loading(false)
+            AsyncResult.Error(e)
         }
     }
 
-    suspend fun addUser(user: User): ServiceResult {
+    suspend fun addUser(user: User): AsyncResult<User> {
         return try {
-            ServiceResult.Loading(true)
-            val response: User = httpClient.post(USER) {
+            AsyncResult.Success(httpClient.post(USER) {
                 setBody(user)
-            }.body()
-            ServiceResult.Success(response)
-            ServiceResult.Loading(false)
+            }.body<User>())
         } catch (e: Exception) {
-            ServiceResult.Error(e.message ?: "An error occurred")
-            ServiceResult.Loading(false)
+            AsyncResult.Error(e)
         }
     }
 }

@@ -1,19 +1,18 @@
 package screens.auth
 
 import cafe.adriel.voyager.core.model.ScreenModel
-import data.remote.user.UserService
+import cafe.adriel.voyager.core.model.screenModelScope
+import data.remote.product.ProductService
+import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 class LoginScreenModel : ScreenModel, KoinComponent {
-    private val userService by inject<UserService>()
+    private val productService by inject<ProductService>()
 
-    override fun onDispose() {
-        println("On dispose LoginScreenModel")
-        super.onDispose()
-    }
-
-    suspend fun testApi() {
-        userService.getUsers()
+    fun testApi() {
+        screenModelScope.launch {
+            productService.getProducts()
+        }
     }
 }

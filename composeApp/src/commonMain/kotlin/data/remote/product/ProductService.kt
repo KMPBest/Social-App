@@ -1,3 +1,5 @@
+@file:OptIn(InternalAPI::class)
+
 package data.remote.product
 
 import io.ktor.client.HttpClient
@@ -5,9 +7,10 @@ import io.ktor.client.call.body
 import io.ktor.client.request.get
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
+import io.ktor.util.InternalAPI
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
-import utils.ServiceResult
+import utils.AsyncResult
 
 class ProductService : KoinComponent {
     private val httpClient by inject<HttpClient>()
@@ -16,41 +19,30 @@ class ProductService : KoinComponent {
         const val PRODUCT = "products"
     }
 
-    suspend fun getProducts(): ServiceResult {
+
+    suspend fun getProducts(): AsyncResult<List<Product>> {
         return try {
-            ServiceResult.Loading(true)
-            val response: List<Product> = httpClient.get(PRODUCT).body()
-            ServiceResult.Success(response)
-            ServiceResult.Loading(false)
+            AsyncResult.Success(httpClient.get(PRODUCT).body<List<Product>>())
         } catch (e: Exception) {
-            ServiceResult.Error(e.message ?: "An error occurred")
-            ServiceResult.Loading(false)
+            AsyncResult.Error(e)
         }
     }
 
-    suspend fun getProduct(id: Int): ServiceResult {
+    suspend fun getProduct(id: Int): AsyncResult<Product> {
         return try {
-            ServiceResult.Loading(true)
-            val response: Product = httpClient.get("$PRODUCT/$id").body()
-            ServiceResult.Success(response)
-            ServiceResult.Loading(false)
+            AsyncResult.Success(httpClient.get("$PRODUCT/$id").body<Product>())
         } catch (e: Exception) {
-            ServiceResult.Error(e.message ?: "An error occurred")
-            ServiceResult.Loading(false)
+            AsyncResult.Error(e)
         }
     }
 
-    suspend fun addProduct(product: Product): ServiceResult {
+    suspend fun addProduct(product: Product): AsyncResult<Product> {
         return try {
-            ServiceResult.Loading(true)
-            val response: Product = httpClient.post(PRODUCT) {
+            AsyncResult.Success(httpClient.post(PRODUCT) {
                 setBody(product)
-            }.body()
-            ServiceResult.Success(response)
-            ServiceResult.Loading(false)
+            }.body<Product>())
         } catch (e: Exception) {
-            ServiceResult.Error(e.message ?: "An error occurred")
-            ServiceResult.Loading(false)
+            AsyncResult.Error(e)
         }
     }
 }

@@ -1,7 +1,13 @@
 package di
 
 import io.ktor.client.HttpClient
+import io.ktor.client.plugins.ClientRequestException
+import io.ktor.client.plugins.HttpResponseValidator
 import io.ktor.client.plugins.HttpTimeout
+import io.ktor.client.plugins.ServerResponseException
+import io.ktor.client.plugins.auth.Auth
+import io.ktor.client.plugins.auth.providers.BearerTokens
+import io.ktor.client.plugins.auth.providers.bearer
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.defaultRequest
 import io.ktor.client.plugins.logging.LogLevel
@@ -16,6 +22,7 @@ import org.koin.dsl.module
 val networkModule = module {
     single {
         HttpClient {
+            expectSuccess = true
             defaultRequest {
                 url.takeFrom(URLBuilder().takeFrom("https://fakestoreapi.com/"))
             }
@@ -30,11 +37,29 @@ val networkModule = module {
                 })
             }
             install(Logging) {
-                level = LogLevel.INFO
+                level = LogLevel.ALL
                 logger = object : Logger {
                     override fun log(message: String) {
                         println("--------------------------------------------------")
                         println("[HttpClient] $message")
+                    }
+                }
+            }
+            install(Auth) {
+                bearer {
+                    loadTokens {
+                        BearerTokens(
+                            "token", "refreshToken"
+                        ) // TODO: Load tokens from a local storage and return them as the 'BearerTokens' instance
+                    }
+
+                }
+            }
+            HttpResponseValidator {
+                validateResponse { response ->
+                    when (response.status.value) {
+                        in 400..499 -> throw ClientRequestException(response, "Client error")
+                        in 500..599 -> throw ServerResponseException(response, "Server error")
                     }
                 }
             }

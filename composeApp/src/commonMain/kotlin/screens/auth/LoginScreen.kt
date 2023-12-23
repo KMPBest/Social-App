@@ -8,12 +8,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.koin.getScreenModel
-import kotlinx.coroutines.launch
 import shared.UIComposable
 
 class LoginScreen : Screen, UIComposable {
@@ -27,12 +25,9 @@ class LoginScreen : Screen, UIComposable {
     override fun Render() {
         val greetingText by remember { mutableStateOf("screens.auth.Login") }
         val loginScreenModel = getScreenModel<LoginScreenModel>()
-        val coroutineScope = rememberCoroutineScope()
         Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
             Button(onClick = {
-                coroutineScope.launch {
-                    loginScreenModel.testApi()
-                }
+                loginScreenModel.testApi()
             }) {
                 Text("$greetingText!")
             }

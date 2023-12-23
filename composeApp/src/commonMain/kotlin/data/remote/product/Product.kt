@@ -1,5 +1,8 @@
 package data.remote.product
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class Product(
     val category: String,
     val description: String,

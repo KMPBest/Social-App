@@ -13,6 +13,7 @@ data class User(
     val username: String
 )
 
+@Serializable
 data class Address(
     val city: String,
     val geolocation: Geolocation,
@@ -21,10 +22,12 @@ data class Address(
     val zipcode: String
 )
 
+@Serializable
 data class Geolocation(
     val lat: String, val long: String
 )
 
+@Serializable
 data class Name(
     val firstname: String, val lastname: String
 )
