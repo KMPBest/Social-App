@@ -1,8 +1,8 @@
 [versions]
-compose = "1.5.4"
-compose-plugin = "1.5.10"
+compose = "1.6.0"
+compose-plugin = "1.5.12"
 compose-compiler = "1.5.4"
-agp = "8.2.0"
+agp = "8.2.2"
 android-minSdk = "24"
 android-compileSdk = "34"
 android-targetSdk = "34"
@@ -11,14 +11,11 @@ kotlin = "1.9.20"
 voyagerVersion = "1.0.0"
 koin = "3.4.3"
 koin-compose = "1.0.4"
-ktor-version = "2.3.4"
+ktor-version = "2.3.8"
 
 [libraries]
 compose-ui = { module = "androidx.compose.ui:ui", version.ref = "compose" }
-compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose" }
 compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose" }
-compose-foundation = { module = "androidx.compose.foundation:foundation", version.ref = "compose" }
-compose-material = { module = "androidx.compose.material:material", version.ref = "compose" }
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
 
 #Ktor
