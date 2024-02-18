@@ -1,5 +1,6 @@
 package data.remote.user
 
+import data.AsyncResult
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.get
@@ -8,7 +9,6 @@ import io.ktor.client.request.setBody
 import kotlinx.serialization.json.Json
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
-import utils.AsyncResult
 
 class UserService : KoinComponent {
 

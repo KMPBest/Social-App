@@ -1,4 +1,4 @@
-package utils
+package data
 
 sealed interface AsyncResult<out T> {
     data class Success<T>(val data: T) : AsyncResult<T>

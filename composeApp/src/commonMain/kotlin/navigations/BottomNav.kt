@@ -2,17 +2,17 @@ package navigations
 
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
-import androidx.compose.material.BottomNavigation
-import androidx.compose.material.BottomNavigationItem
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
@@ -22,10 +22,7 @@ import cafe.adriel.voyager.navigator.tab.LocalTabNavigator
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabNavigator
 import screens.main.home.HomeScreen
-import screens.main.message.MessageScreen
-import screens.main.newPost.NewPostScreen
 import screens.main.profile.ProfileScreen
-import screens.main.search.SearchScreen
 import shared.UIComposable
 
 class BottomNav(private val firstScreen: Tab = HomeScreen()) : Screen, UIComposable {
@@ -43,14 +40,14 @@ class BottomNav(private val firstScreen: Tab = HomeScreen()) : Screen, UIComposa
                         CurrentTab()
                     },
                     bottomBar = {
-                        BottomNavigation(
-                            backgroundColor = MaterialTheme.colors.background,
-                            modifier = Modifier.height(56.dp),
+                        NavigationBar(
+                            containerColor = MaterialTheme.colorScheme.background,
+                            contentColor = MaterialTheme.colorScheme.primary,
+                            modifier = Modifier.shadow(
+                                elevation = 16.dp, shape = MaterialTheme.shapes.large
+                            )
                         ) {
                             TabNavigationItem(HomeScreen())
-                            TabNavigationItem(SearchScreen())
-                            TabNavigationItem(NewPostScreen())
-                            TabNavigationItem(MessageScreen())
                             TabNavigationItem(ProfileScreen())
                         }
                     },
@@ -61,10 +58,10 @@ class BottomNav(private val firstScreen: Tab = HomeScreen()) : Screen, UIComposa
 }
 
 @Composable
-private fun RowScope.TabNavigationItem(tab: Tab) { // extension function
+private fun RowScope.TabNavigationItem(tab: Tab) {
     val tabNavigator = LocalTabNavigator.current
 
-    BottomNavigationItem(selected = tabNavigator.current == tab,
+    NavigationBarItem(selected = tabNavigator.current == tab,
         onClick = { tabNavigator.current = tab },
         icon = {
             tab.options.icon?.let {
@@ -73,8 +70,6 @@ private fun RowScope.TabNavigationItem(tab: Tab) { // extension function
                 )
             }
         },
-        selectedContentColor = MaterialTheme.colors.primary,
-        unselectedContentColor = MaterialTheme.colors.onSurface,
         label = { Text(tab.options.title) },
         alwaysShowLabel = false,
         modifier = Modifier.drawBehind {

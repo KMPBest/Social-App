@@ -1,5 +1,5 @@
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import themes.DarkColors
 import themes.LightColors
@@ -11,6 +11,6 @@ fun AppTheme(
     val colors = if (useDarkTheme) DarkColors else LightColors
 
     MaterialTheme(
-        colors = colors, content = content
+        colorScheme = colors, content = content
     )
 }
