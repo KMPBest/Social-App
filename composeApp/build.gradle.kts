@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsCompose)
     kotlin("plugin.serialization") version "1.9.22"
+    id("io.realm.kotlin") version "1.13.0"
 }
 
 kotlin {
@@ -68,6 +69,9 @@ kotlin {
             implementation(libs.ktor.serialization)
             implementation(libs.ktor.logging)
             implementation(libs.ktor.auth)
+
+            implementation(libs.kotlinx.coroutines.core)
+            implementation(libs.realm)
         }
     }
 }

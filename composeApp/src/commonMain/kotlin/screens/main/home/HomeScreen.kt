@@ -13,16 +13,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
-import cafe.adriel.voyager.core.registry.rememberScreen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabOptions
-import navigations.SharedScreen
 import org.koin.core.component.KoinComponent
-import shared.UIComposable
 
-class HomeScreen : Tab, UIComposable, KoinComponent {
+class HomeScreen : Tab, KoinComponent {
 
     override val options: TabOptions
         @Composable get() = TabOptions(
@@ -33,22 +30,15 @@ class HomeScreen : Tab, UIComposable, KoinComponent {
 
     @Composable
     override fun Content() {
-        Render()
-    }
-
-
-    @Composable
-    override fun Render() {
         val greetingText by remember { mutableStateOf("screens.main.home") }
         val navigator = LocalNavigator.currentOrThrow
-        val loginScreen = rememberScreen(SharedScreen.Login)
         Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
             Button(onClick = {
-                navigator.parent?.push(loginScreen)
+               
             }) {
                 Text("$greetingText!")
             }
         }
-
     }
+
 }

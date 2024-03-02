@@ -1,20 +1,21 @@
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import cafe.adriel.voyager.core.registry.ScreenRegistry
 import di.appModule
-import navigations.featureScreenModule
 import org.koin.compose.KoinApplication
+import org.koin.compose.koinInject
 
 @Composable
 fun App() {
     KoinApplication(application = {
         modules(appModule)
     }) {
+        val appStateService = koinInject<AppSreenModel>()
+        
+        appStateService.createNewAppStateInstance()
+        appStateService.logAppState()
+
         MaterialTheme {
             AppTheme {
-                ScreenRegistry {
-                    featureScreenModule()
-                }
                 MainNav()
             }
         }

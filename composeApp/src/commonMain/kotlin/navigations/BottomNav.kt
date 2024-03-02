@@ -23,16 +23,10 @@ import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabNavigator
 import screens.main.home.HomeScreen
 import screens.main.profile.ProfileScreen
-import shared.UIComposable
 
-class BottomNav(private val firstScreen: Tab = HomeScreen()) : Screen, UIComposable {
+class BottomNav(private val firstScreen: Tab = HomeScreen()) : Screen {
     @Composable
     override fun Content() {
-        Render()
-    }
-
-    @Composable
-    override fun Render() {
         TabNavigator(firstScreen) {
             Surface(modifier = Modifier.fillMaxSize()) {
                 Scaffold(

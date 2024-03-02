@@ -18,9 +18,8 @@ import cafe.adriel.voyager.navigator.currentOrThrow
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabOptions
 import screens.main.home.HomeScreen
-import shared.UIComposable
 
-class ProfileScreen : Tab, UIComposable {
+class ProfileScreen : Tab {
 
     override val options: TabOptions
         @Composable
@@ -32,11 +31,6 @@ class ProfileScreen : Tab, UIComposable {
 
     @Composable
     override fun Content() {
-        Render()
-    }
-
-    @Composable
-    override fun Render() {
         val greetingText by remember { mutableStateOf("screens.main.profile") }
         val navigator = LocalNavigator.currentOrThrow
 
