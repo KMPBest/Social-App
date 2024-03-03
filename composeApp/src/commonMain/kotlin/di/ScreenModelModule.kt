@@ -1,6 +1,6 @@
 package di
 
-import AppSreenModel
+import AppScreenModel
 import org.koin.dsl.module
 import screens.auth.LoginScreenModel
 import screens.main.home.HomeScreenModel
@@ -10,5 +10,5 @@ val screenModelModule = module {
     factory { LoginScreenModel() }
     factory { HomeScreenModel() }
     factory { ProfileScreenModel() }
-    factory { AppSreenModel() }
+    factory { AppScreenModel() }
 }

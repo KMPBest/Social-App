@@ -9,10 +9,9 @@ fun App() {
     KoinApplication(application = {
         modules(appModule)
     }) {
-        val appStateService = koinInject<AppSreenModel>()
-        
-        appStateService.createNewAppStateInstance()
-        appStateService.logAppState()
+        val appStateService = koinInject<AppScreenModel>()
+
+        appStateService.logAppSetting()
 
         MaterialTheme {
             AppTheme {

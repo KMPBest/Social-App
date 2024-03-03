@@ -70,8 +70,14 @@ kotlin {
             implementation(libs.ktor.logging)
             implementation(libs.ktor.auth)
 
+            // Kotlinx coroutines
             implementation(libs.kotlinx.coroutines.core)
+
+            // Realm
             implementation(libs.realm)
+
+            // Multiplatform Settings
+            implementation(libs.multiplatform.settings)
         }
     }
 }

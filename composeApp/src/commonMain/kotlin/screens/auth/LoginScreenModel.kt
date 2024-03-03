@@ -2,7 +2,7 @@ package screens.auth
 
 import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
-import data.local.AppStateService
+import data.local.database.AppStateService
 import data.remote.product.ProductService
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
