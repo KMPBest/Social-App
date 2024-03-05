@@ -1,15 +1,13 @@
-package domain.repositories
+package data.local.settings
 
-import domain.models.AppSetting
-
-interface AppSettingRepository {
+interface AppPreferencesRepository {
     fun isDarkMode(): Boolean
     fun setDarkMode(isDarkMode: Boolean)
     fun getToken(): String
     fun setToken(token: String)
     fun getRefreshToken(): String
     fun setRefreshToken(refreshToken: String)
-    fun getAppSetting(): AppSetting
-    fun setAppSetting(appSetting: AppSetting)
+    fun getAppSetting(): AppPreferences
+    fun setAppSetting(appPreferences: AppPreferences)
     fun clear()
 }

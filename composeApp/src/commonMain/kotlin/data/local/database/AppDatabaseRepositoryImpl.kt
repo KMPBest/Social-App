@@ -1,7 +1,5 @@
 package data.local.database
 
-import domain.models.AppDatabase
-import domain.repositories.AppDatabaseRepository
 import io.realm.kotlin.Realm
 import io.realm.kotlin.RealmConfiguration
 import io.realm.kotlin.UpdatePolicy

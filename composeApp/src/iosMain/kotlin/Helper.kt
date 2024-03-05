@@ -1,3 +1,3 @@
-import di.initKoin as SharedInitKoin
+import shared.initKoin as SharedInitKoin
 
 fun initKoin() = SharedInitKoin()

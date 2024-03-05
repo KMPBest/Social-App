@@ -1,6 +1,5 @@
-package domain.repositories
+package data.local.database
 
-import domain.models.AppDatabase
 import kotlinx.coroutines.flow.Flow
 
 interface AppDatabaseRepository {

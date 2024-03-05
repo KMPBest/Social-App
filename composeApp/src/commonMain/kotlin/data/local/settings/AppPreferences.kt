@@ -1,6 +1,6 @@
-package domain.models
+package data.local.settings
 
-data class AppSetting(
+data class AppPreferences(
     val isDarkMode: Boolean, val token: String, val refreshToken: String
 ) {
     companion object {

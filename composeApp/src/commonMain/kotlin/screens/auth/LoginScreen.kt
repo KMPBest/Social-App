@@ -20,7 +20,6 @@ class LoginScreen : Screen, KoinComponent {
 
     @Composable
     override fun Content() {
-
         Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
             Card(Modifier.padding(start = 12.dp, end = 12.dp, top = 12.dp).width(200.dp).clickable {
                 screenModel.changeAppTheme()

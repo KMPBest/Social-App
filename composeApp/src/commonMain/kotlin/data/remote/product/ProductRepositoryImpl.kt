@@ -1,23 +1,22 @@
 package data.remote.product
 
-import data.AsyncResult
+import data.utils.AsyncResult
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.get
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
-import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
 
-class ProductService : KoinComponent {
-    private val httpClient by inject<HttpClient>()
+class ProductRepositoryImpl(
+    private val httpClient: HttpClient
+) : ProductRepository {
 
     companion object {
         const val PRODUCT = "products"
     }
 
 
-    suspend fun getProducts(): AsyncResult<List<Product>> {
+    override suspend fun getProducts(): AsyncResult<List<Product>> {
         return try {
             AsyncResult.Success(httpClient.get(PRODUCT).body<List<Product>>())
         } catch (e: Exception) {
@@ -25,7 +24,7 @@ class ProductService : KoinComponent {
         }
     }
 
-    suspend fun getProduct(id: Int): AsyncResult<Product> {
+    override suspend fun getProduct(id: Int): AsyncResult<Product> {
         return try {
             AsyncResult.Success(httpClient.get("$PRODUCT/$id").body<Product>())
         } catch (e: Exception) {
@@ -33,7 +32,7 @@ class ProductService : KoinComponent {
         }
     }
 
-    suspend fun addProduct(product: Product): AsyncResult<Product> {
+    override suspend fun addProduct(product: Product): AsyncResult<Product> {
         return try {
             AsyncResult.Success(httpClient.post(PRODUCT) {
                 setBody(product)

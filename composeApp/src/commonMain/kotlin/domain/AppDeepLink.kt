@@ -1,4 +1,4 @@
-package domain.utils
+package domain
 
 import kotlin.experimental.ExperimentalObjCName
 import kotlin.native.ObjCName
