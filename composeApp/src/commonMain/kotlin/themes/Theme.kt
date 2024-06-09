@@ -1,16 +1,16 @@
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import themes.DarkColors
-import themes.LightColors
+import androidx.compose.ui.graphics.Color
+import com.materialkolor.rememberDynamicColorScheme
 
 @Composable
 fun AppTheme(
-    useDarkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit
+    seedColor: Color, useDarkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit
 ) {
-    val colors = if (useDarkTheme) DarkColors else LightColors
+    val colorScheme = rememberDynamicColorScheme(seedColor, useDarkTheme)
 
     MaterialTheme(
-        colorScheme = colors, content = content
+        colorScheme = colorScheme, content = content
     )
 }

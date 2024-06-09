@@ -32,6 +32,8 @@ kotlin {
             implementation(libs.compose.ui)
             implementation(libs.compose.ui.tooling.preview)
             implementation(libs.androidx.activity.compose)
+            implementation("androidx.datastore:datastore-preferences:1.1.1")
+
 
             // Koin for Android
             implementation(libs.koin.android)
@@ -79,6 +81,10 @@ kotlin {
             // Multiplatform Settings
             implementation(libs.multiplatform.settings)
             implementation(libs.multiplatform.settings.no.arg)
+            implementation(libs.multiplatform.settings.coroutines)
+            implementation(libs.multiplatform.settings.datastore)
+
+            implementation(libs.materialKolor)
         }
     }
 }

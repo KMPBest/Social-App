@@ -1,13 +1,14 @@
 package data.local.settings
 
+import kotlinx.coroutines.flow.Flow
+
 interface AppPreferencesRepository {
-    fun isDarkMode(): Boolean
-    fun setDarkMode(isDarkMode: Boolean)
-    fun getToken(): String
-    fun setToken(token: String)
-    fun getRefreshToken(): String
-    fun setRefreshToken(refreshToken: String)
-    fun getAppSetting(): AppPreferences
-    fun setAppSetting(appPreferences: AppPreferences)
-    fun clear()
+    suspend fun isDarkMode(): Flow<Boolean>
+    suspend fun setDarkMode(isDarkMode: Boolean)
+    suspend fun getToken(): String
+    suspend fun setToken(token: String)
+    suspend fun getRefreshToken(): String
+    suspend fun setRefreshToken(refreshToken: String)
+    suspend fun getAppSetting(): AppPreferences
+    suspend fun clear()
 }

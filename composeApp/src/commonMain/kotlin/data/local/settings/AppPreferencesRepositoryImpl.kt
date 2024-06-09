@@ -1,34 +1,39 @@
 package data.local.settings
 
-import com.russhwolf.settings.Settings
+import com.russhwolf.settings.ExperimentalSettingsApi
+import com.russhwolf.settings.coroutines.FlowSettings
+
+@OptIn(ExperimentalSettingsApi::class)
+expect val setting: FlowSettings
 
 class AppPreferencesRepositoryImpl : AppPreferencesRepository {
-    private val setting: Settings = Settings()
 
-    override fun isDarkMode() = setting.getBoolean(AppPreferences.IS_DARK_MODE, false)
+    @OptIn(ExperimentalSettingsApi::class)
+    override suspend fun isDarkMode() =
+        setting.getBooleanFlow(AppPreferences.IS_DARK_MODE, false)
 
-    override fun setDarkMode(isDarkMode: Boolean) =
+    @OptIn(ExperimentalSettingsApi::class)
+    override suspend fun setDarkMode(isDarkMode: Boolean) =
         setting.putBoolean(AppPreferences.IS_DARK_MODE, isDarkMode)
 
-    override fun getToken() = setting.getString(AppPreferences.TOKEN, "")
+    @OptIn(ExperimentalSettingsApi::class)
+    override suspend fun getToken() = setting.getString(AppPreferences.TOKEN, "")
 
-    override fun setToken(token: String) = setting.putString(AppPreferences.TOKEN, token)
+    @OptIn(ExperimentalSettingsApi::class)
+    override suspend fun setToken(token: String) = setting.putString(AppPreferences.TOKEN, token)
 
-    override fun getRefreshToken() = setting.getString(AppPreferences.REFRESH_TOKEN, "")
+    @OptIn(ExperimentalSettingsApi::class)
+    override suspend fun getRefreshToken() = setting.getString(AppPreferences.REFRESH_TOKEN, "")
 
-    override fun setRefreshToken(refreshToken: String) =
+    @OptIn(ExperimentalSettingsApi::class)
+    override suspend fun setRefreshToken(refreshToken: String) =
         setting.putString(AppPreferences.REFRESH_TOKEN, refreshToken)
 
-    override fun getAppSetting() = AppPreferences(
+    override suspend fun getAppSetting() = AppPreferences(
         isDarkMode = isDarkMode(), token = getToken(), refreshToken = getRefreshToken()
     )
-
-    override fun setAppSetting(appPreferences: AppPreferences) {
-        setDarkMode(appPreferences.isDarkMode)
-        setToken(appPreferences.token)
-        setRefreshToken(appPreferences.refreshToken)
-    }
-
-    override fun clear() = setting.clear()
+    
+    @OptIn(ExperimentalSettingsApi::class)
+    override suspend fun clear() = setting.clear()
 
 }

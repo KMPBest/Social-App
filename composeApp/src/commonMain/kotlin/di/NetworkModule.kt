@@ -1,5 +1,6 @@
 package di
 
+import data.local.settings.AppPreferencesRepository
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.ClientRequestException
 import io.ktor.client.plugins.HttpResponseValidator
@@ -21,6 +22,7 @@ import org.koin.dsl.module
 
 val networkModule = module {
     single {
+        val appPreferences: AppPreferencesRepository by inject()
         HttpClient {
             expectSuccess = true
             defaultRequest {
@@ -49,10 +51,9 @@ val networkModule = module {
                 bearer {
                     loadTokens {
                         BearerTokens(
-                            "token", "refreshToken"
-                        ) // TODO: Load tokens from a local storage and return them as the 'BearerTokens' instance
+                            appPreferences.getToken(), appPreferences.getRefreshToken()
+                        )
                     }
-
                 }
             }
             HttpResponseValidator {
