@@ -51,30 +51,36 @@ import multiplatform_app.composeapp.generated.resources.open_github
 import multiplatform_app.composeapp.generated.resources.run
 import multiplatform_app.composeapp.generated.resources.stop
 import multiplatform_app.composeapp.generated.resources.theme
-import org.edward.app.data.datastore.DataStoreKeys
+import org.edward.app.data.dataStore.DataStoreKeys
+import org.edward.app.data.dataStore.dataStoreFileName
+import org.edward.app.data.dataStore.makePreferenceAreas
 import org.edward.app.di.appModule
 import org.edward.app.theme.AppTheme
 import org.jetbrains.compose.resources.Font
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.resources.vectorResource
 import org.koin.compose.KoinApplication
+import org.koin.compose.getKoin
 
 internal expect fun openUrl(url: String?)
 
 @Composable
-internal fun App(preferences: DataStore<Preferences>) {
+internal fun App() {
 
     val scope = rememberCoroutineScope()
 
     KoinApplication(application = {
+        makePreferenceAreas(dataStoreFileName)
         modules(appModule)
     }) {
+
+        val preferences = getKoin().get<DataStore<Preferences>>()
+
         val isDarkState by preferences.data.map {
             it[DataStoreKeys.DARK_THEME] ?: false
         }.collectAsState(isSystemInDarkTheme())
 
         AppTheme(isDarkState) {
-            println("Component loaded!")
             Column(
                 modifier = Modifier.fillMaxSize().windowInsetsPadding(WindowInsets.safeDrawing)
                     .padding(16.dp), horizontalAlignment = Alignment.CenterHorizontally
@@ -138,6 +144,7 @@ internal fun App(preferences: DataStore<Preferences>) {
             }
         }
     }
-
 }
+
+
 

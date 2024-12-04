@@ -24,8 +24,7 @@ kotlin {
             }
         }
         //https://www.jetbrains.com/help/kotlin-multiplatform-dev/compose-test.html
-        @OptIn(ExperimentalKotlinGradlePluginApi::class)
-        instrumentedTestVariant {
+        @OptIn(ExperimentalKotlinGradlePluginApi::class) instrumentedTestVariant {
             sourceSetTree.set(KotlinSourceSetTree.test)
             dependencies {
                 debugImplementation(libs.androidx.testManifest)
@@ -35,9 +34,7 @@ kotlin {
     }
 
     listOf(
-        iosX64(),
-        iosArm64(),
-        iosSimulatorArm64()
+        iosX64(), iosArm64(), iosSimulatorArm64()
     ).forEach {
         it.binaries.framework {
             baseName = "ComposeApp"
@@ -82,6 +79,10 @@ kotlin {
             // DataStore
             implementation(libs.dataStore)
             implementation(libs.dataStore.preferences)
+            implementation(libs.dataStore.preferences.core)
+
+            implementation("com.russhwolf:multiplatform-settings-coroutines:1.1.1")
+            implementation("com.russhwolf:multiplatform-settings:1.1.1")
         }
 
         commonTest.dependencies {
@@ -124,8 +125,7 @@ android {
         res.srcDirs("src/androidMain/res")
     }
     //https://developer.android.com/studio/test/gradle-managed-devices
-    @Suppress("UnstableApiUsage")
-    testOptions {
+    @Suppress("UnstableApiUsage") testOptions {
         managedDevices.devices {
             maybeCreate<ManagedVirtualDevice>("pixel5").apply {
                 device = "Pixel 5"

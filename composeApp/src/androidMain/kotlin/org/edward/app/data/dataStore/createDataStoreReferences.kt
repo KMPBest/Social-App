@@ -1,4 +1,4 @@
-package org.edward.app.data.datastore
+package org.edward.app.data.dataStore
 
 import android.content.Context
 import androidx.datastore.core.DataStore
