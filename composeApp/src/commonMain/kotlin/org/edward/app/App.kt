@@ -46,14 +46,14 @@ import multiplatform_app.composeapp.generated.resources.open_github
 import multiplatform_app.composeapp.generated.resources.run
 import multiplatform_app.composeapp.generated.resources.stop
 import multiplatform_app.composeapp.generated.resources.theme
-import org.edward.app.data.local.DataStoreRepositoryImpl
-import org.edward.app.data.local.createDataStore
+import org.edward.app.data.local.DataStoreRepository
 import org.edward.app.di.appModule
 import org.edward.app.theme.AppTheme
 import org.jetbrains.compose.resources.Font
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.resources.vectorResource
 import org.koin.compose.KoinApplication
+import org.koin.mp.KoinPlatform.getKoin
 
 internal expect fun openUrl(url: String?)
 
@@ -61,9 +61,9 @@ internal expect fun openUrl(url: String?)
 internal fun App(context: Any? = null) {
     val scope = rememberCoroutineScope()
 
-    KoinApplication(application = { modules(appModule) }) {
+    KoinApplication(application = { modules(appModule(context)) }) {
 
-        val dataStoreRepository = remember { DataStoreRepositoryImpl(createDataStore(context)) }
+        val dataStoreRepository: DataStoreRepository = getKoin().get<DataStoreRepository>()
 
         val isDarkState by dataStoreRepository.isDarkTheme().collectAsState(initial = false)
 
