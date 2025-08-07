@@ -6,7 +6,6 @@ import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
@@ -35,10 +34,6 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.core.edit
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import multiplatform_app.composeapp.generated.resources.IndieFlower_Regular
 import multiplatform_app.composeapp.generated.resources.Res
@@ -51,34 +46,26 @@ import multiplatform_app.composeapp.generated.resources.open_github
 import multiplatform_app.composeapp.generated.resources.run
 import multiplatform_app.composeapp.generated.resources.stop
 import multiplatform_app.composeapp.generated.resources.theme
-import org.edward.app.data.dataStore.DataStoreKeys
-import org.edward.app.data.dataStore.dataStoreFileName
-import org.edward.app.data.dataStore.makePreferenceAreas
+import org.edward.app.data.local.DataStoreRepositoryImpl
+import org.edward.app.data.local.createDataStore
 import org.edward.app.di.appModule
 import org.edward.app.theme.AppTheme
 import org.jetbrains.compose.resources.Font
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.resources.vectorResource
 import org.koin.compose.KoinApplication
-import org.koin.compose.getKoin
 
 internal expect fun openUrl(url: String?)
 
 @Composable
-internal fun App() {
-
+internal fun App(context: Any? = null) {
     val scope = rememberCoroutineScope()
 
-    KoinApplication(application = {
-        makePreferenceAreas(dataStoreFileName)
-        modules(appModule)
-    }) {
+    KoinApplication(application = { modules(appModule) }) {
 
-        val preferences = getKoin().get<DataStore<Preferences>>()
+        val dataStoreRepository = remember { DataStoreRepositoryImpl(createDataStore(context)) }
 
-        val isDarkState by preferences.data.map {
-            it[DataStoreKeys.DARK_THEME] ?: false
-        }.collectAsState(isSystemInDarkTheme())
+        val isDarkState by dataStoreRepository.isDarkTheme().collectAsState(initial = false)
 
         AppTheme(isDarkState) {
             Column(
@@ -107,32 +94,34 @@ internal fun App() {
                     contentDescription = null
                 )
 
-                ElevatedButton(modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
-                    .widthIn(min = 200.dp), onClick = { isAnimate = !isAnimate }, content = {
-                    Icon(
-                        vectorResource(Res.drawable.ic_rotate_right), contentDescription = null
-                    )
-                    Spacer(Modifier.size(ButtonDefaults.IconSpacing))
-                    Text(
-                        stringResource(if (isAnimate) Res.string.stop else Res.string.run)
-                    )
-                })
+                ElevatedButton(
+                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
+                        .widthIn(min = 200.dp), onClick = { isAnimate = !isAnimate }, content = {
+                        Icon(
+                            vectorResource(Res.drawable.ic_rotate_right), contentDescription = null
+                        )
+                        Spacer(Modifier.size(ButtonDefaults.IconSpacing))
+                        Text(
+                            stringResource(if (isAnimate) Res.string.stop else Res.string.run)
+                        )
+                    })
 
                 val icon = remember(isDarkState) {
                     if (isDarkState) Res.drawable.ic_light_mode
                     else Res.drawable.ic_dark_mode
                 }
 
-                ElevatedButton(modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
-                    .widthIn(min = 200.dp), onClick = {
-                    scope.launch {
-                        preferences.edit { it[DataStoreKeys.DARK_THEME] = !isDarkState }
-                    }
-                }, content = {
-                    Icon(vectorResource(icon), contentDescription = null)
-                    Spacer(Modifier.size(ButtonDefaults.IconSpacing))
-                    Text(stringResource(Res.string.theme))
-                })
+                ElevatedButton(
+                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
+                        .widthIn(min = 200.dp), onClick = {
+                        scope.launch {
+                            dataStoreRepository.saveDarkTheme(!isDarkState)
+                        }
+                    }, content = {
+                        Icon(vectorResource(icon), contentDescription = null)
+                        Spacer(Modifier.size(ButtonDefaults.IconSpacing))
+                        Text(stringResource(Res.string.theme))
+                    })
 
                 TextButton(
                     modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)

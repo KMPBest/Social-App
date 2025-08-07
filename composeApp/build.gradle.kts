@@ -54,6 +54,7 @@ kotlin {
             implementation(libs.composeIcons.featherIcons)
             implementation(libs.kotlinx.datetime)
 
+            implementation(libs.font.awesome)
 
             // Voyager
             implementation(libs.voyager.navigator)
@@ -74,15 +75,12 @@ kotlin {
 
             // Kotlinx coroutines
             implementation(libs.kotlinx.coroutines.core)
-            implementation(libs.kotlinx.coroutines.swing)
 
             // DataStore
             implementation(libs.dataStore)
             implementation(libs.dataStore.preferences)
             implementation(libs.dataStore.preferences.core)
-
-            implementation("com.russhwolf:multiplatform-settings-coroutines:1.1.1")
-            implementation("com.russhwolf:multiplatform-settings:1.1.1")
+            implementation(libs.atomicfu)
         }
 
         commonTest.dependencies {
@@ -108,7 +106,7 @@ kotlin {
 
 android {
     namespace = "org.edward.app"
-    compileSdk = 34
+    compileSdk = 36
 
     defaultConfig {
         minSdk = 24
@@ -126,7 +124,7 @@ android {
     }
     //https://developer.android.com/studio/test/gradle-managed-devices
     @Suppress("UnstableApiUsage") testOptions {
-        managedDevices.devices {
+        managedDevices.allDevices {
             maybeCreate<ManagedVirtualDevice>("pixel5").apply {
                 device = "Pixel 5"
                 apiLevel = 34
@@ -135,13 +133,14 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     buildFeatures {
         //enables a Compose tooling support in the AndroidStudio
         compose = true
     }
+    buildToolsVersion = "36.0.0"
 }
 
 buildConfig {

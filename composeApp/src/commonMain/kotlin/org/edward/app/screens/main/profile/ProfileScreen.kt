@@ -2,8 +2,6 @@ package org.edward.app.screens.main.profile
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -17,6 +15,9 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabOptions
+import compose.icons.FontAwesomeIcons
+import compose.icons.fontawesomeicons.Solid
+import compose.icons.fontawesomeicons.solid.PersonBooth
 import org.edward.app.screens.main.home.HomeScreen
 
 class ProfileScreen : Tab {
@@ -25,7 +26,7 @@ class ProfileScreen : Tab {
         @Composable
         get() = TabOptions(
             index = 1u,
-            icon = rememberVectorPainter(Icons.Outlined.Person),
+            icon = rememberVectorPainter(FontAwesomeIcons.Solid.PersonBooth),
             title = "Profile",
         )
 
