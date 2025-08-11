@@ -1,4 +1,4 @@
-package org.edward.app.theme
+package org.edward.app.presentations.theme
 
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.mutableStateOf
+import org.edward.app.shared.SystemAppearance
 
 private val LightColorScheme = lightColorScheme(
     primary = md_theme_light_primary,
@@ -84,10 +85,8 @@ internal fun AppTheme(
         LocalThemeIsDark provides mutableStateOf(isDark)
     ) {
         SystemAppearance(!isDark)
-        MaterialTheme(colorScheme = if (isDark) DarkColorScheme else LightColorScheme,
+        MaterialTheme(
+            colorScheme = if (isDark) DarkColorScheme else LightColorScheme,
             content = { Surface(content = content) })
     }
 }
-
-@Composable
-internal expect fun SystemAppearance(isDark: Boolean)

@@ -1,4 +1,4 @@
-package org.edward.app.theme
+package org.edward.app.shared
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect

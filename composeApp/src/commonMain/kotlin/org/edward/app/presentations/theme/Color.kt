@@ -1,4 +1,4 @@
-package org.edward.app.theme
+package org.edward.app.presentations.theme
 
 import androidx.compose.ui.graphics.Color
 

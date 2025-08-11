@@ -1,7 +1,7 @@
-package org.edward.app.navigations
+package org.edward.app.presentations.navigations
 
 import cafe.adriel.voyager.navigator.Navigator
-import org.edward.app.screens.auth.LoginScreen
+import org.edward.app.presentations.screens.auth.login.LoginScreen
 
 sealed interface AppDestination {
     object Login : AppDestination

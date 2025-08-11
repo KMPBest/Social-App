@@ -1,4 +1,4 @@
-package org.edward.app.screens.main.profile
+package org.edward.app.presentations.screens.main.profile
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -17,7 +17,7 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabOptions
-import org.edward.app.screens.main.home.HomeScreen
+import org.edward.app.presentations.screens.main.home.HomeScreen
 
 class ProfileScreen : Tab {
 

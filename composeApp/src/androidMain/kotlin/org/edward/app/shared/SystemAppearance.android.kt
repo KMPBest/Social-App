@@ -1,4 +1,4 @@
-package org.edward.app.theme
+package org.edward.app.shared
 
 import android.app.Activity
 import androidx.compose.runtime.Composable

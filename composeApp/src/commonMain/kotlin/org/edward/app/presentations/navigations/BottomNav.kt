@@ -1,4 +1,4 @@
-package org.edward.app.navigations
+package org.edward.app.presentations.navigations
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.RowScope
@@ -23,8 +23,8 @@ import cafe.adriel.voyager.navigator.tab.CurrentTab
 import cafe.adriel.voyager.navigator.tab.LocalTabNavigator
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabNavigator
-import org.edward.app.screens.main.home.HomeScreen
-import org.edward.app.screens.main.profile.ProfileScreen
+import org.edward.app.presentations.screens.main.home.HomeScreen
+import org.edward.app.presentations.screens.main.profile.ProfileScreen
 
 class BottomNav(private val firstScreen: Tab = HomeScreen()) : Screen {
     @Composable
@@ -41,7 +41,7 @@ class BottomNav(private val firstScreen: Tab = HomeScreen()) : Screen {
                                 shape = MaterialTheme.shapes.large
                             )
                         ) {
-                            TabNavigationItem(firstScreen) // Home tab
+                            TabNavigationItem(firstScreen)
                             TabNavigationItem(ProfileScreen())
                         }
                     }

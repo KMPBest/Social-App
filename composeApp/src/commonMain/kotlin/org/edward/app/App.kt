@@ -26,10 +26,10 @@ import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import org.edward.app.data.local.DataStoreRepository
 import org.edward.app.di.appModule
-import org.edward.app.navigations.BottomNav
-import org.edward.app.screens.auth.LoginScreen
+import org.edward.app.presentations.navigations.BottomNav
+import org.edward.app.presentations.screens.auth.login.LoginScreen
+import org.edward.app.presentations.theme.AppTheme
 import org.edward.app.shared.initLogger
-import org.edward.app.theme.AppTheme
 import org.koin.compose.KoinApplication
 import org.koin.mp.KoinPlatform.getKoin
 import kotlin.time.Clock

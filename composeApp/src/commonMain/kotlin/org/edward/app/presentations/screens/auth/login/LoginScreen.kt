@@ -1,4 +1,4 @@
-package org.edward.app.screens.auth
+package org.edward.app.presentations.screens.auth.login
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -22,13 +22,13 @@ import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
-import org.edward.app.navigations.BottomNav
-import org.edward.app.screens.main.home.HomeScreen
+import org.edward.app.presentations.navigations.BottomNav
+import org.edward.app.presentations.screens.main.home.HomeScreen
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
 
 class LoginScreen : Screen, KoinComponent {
-    
+
     @Composable
     override fun Content() {
         val screenModel = get<LoginScreenModel>()

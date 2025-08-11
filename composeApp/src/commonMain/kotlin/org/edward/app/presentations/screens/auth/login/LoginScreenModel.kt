@@ -1,7 +1,8 @@
-package org.edward.app.screens.auth
+package org.edward.app.presentations.screens.auth.login
 
 import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -35,7 +36,7 @@ class LoginScreenModel(
         screenModelScope.launch {
             _uiState.value = _uiState.value.copy(isLoading = true, error = null)
 
-            kotlinx.coroutines.delay(1000)
+            delay(1000)
 
             if (_uiState.value.email.isNotBlank() && _uiState.value.password.isNotBlank()) {
                 dataStoreRepository.saveAccessToken("fake_access_token_123", ttl = 3600)

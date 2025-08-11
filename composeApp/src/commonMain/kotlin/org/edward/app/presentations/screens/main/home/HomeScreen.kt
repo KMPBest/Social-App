@@ -1,4 +1,4 @@
-package org.edward.app.screens.main.home
+package org.edward.app.presentations.screens.main.home
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
