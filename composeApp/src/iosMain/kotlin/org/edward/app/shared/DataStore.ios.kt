@@ -1,8 +1,10 @@
-package org.edward.app.data.local
+package org.edward.app.shared
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import kotlinx.cinterop.ExperimentalForeignApi
+import org.edward.app.data.local.AppSetting
+import org.edward.app.data.local.dataStoreFileName
 import platform.Foundation.NSDocumentDirectory
 import platform.Foundation.NSFileManager
 import platform.Foundation.NSURL

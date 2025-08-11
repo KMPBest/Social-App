@@ -1,4 +1,4 @@
-package org.edward.app.data.local
+package org.edward.app.shared
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences

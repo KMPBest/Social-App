@@ -1,7 +1,9 @@
 package org.edward.app.navigations
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
@@ -30,22 +32,24 @@ class BottomNav(private val firstScreen: Tab = HomeScreen()) : Screen {
         TabNavigator(firstScreen) {
             Surface(modifier = Modifier.fillMaxSize()) {
                 Scaffold(
-                    content = {
-                        CurrentTab()
-                    },
                     bottomBar = {
                         NavigationBar(
                             containerColor = MaterialTheme.colorScheme.background,
                             contentColor = MaterialTheme.colorScheme.primary,
                             modifier = Modifier.shadow(
-                                elevation = 16.dp, shape = MaterialTheme.shapes.large
+                                elevation = 16.dp,
+                                shape = MaterialTheme.shapes.large
                             )
                         ) {
-                            TabNavigationItem(HomeScreen())
+                            TabNavigationItem(firstScreen) // Home tab
                             TabNavigationItem(ProfileScreen())
                         }
-                    },
-                )
+                    }
+                ) { innerPadding ->
+                    Box(modifier = Modifier.padding(innerPadding)) {
+                        CurrentTab()
+                    }
+                }
             }
         }
     }
@@ -55,7 +59,8 @@ class BottomNav(private val firstScreen: Tab = HomeScreen()) : Screen {
 private fun RowScope.TabNavigationItem(tab: Tab) {
     val tabNavigator = LocalTabNavigator.current
 
-    NavigationBarItem(selected = tabNavigator.current == tab,
+    NavigationBarItem(
+        selected = tabNavigator.current == tab,
         onClick = { tabNavigator.current = tab },
         icon = {
             tab.options.icon?.let {

@@ -1,8 +1,10 @@
-package org.edward.app.data.local
+package org.edward.app.shared
 
 import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
+import org.edward.app.data.local.AppSetting
+import org.edward.app.data.local.dataStoreFileName
 
 actual fun createDataStore(context: Any?): DataStore<Preferences> {
     require(

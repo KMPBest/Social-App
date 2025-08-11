@@ -1,7 +1,6 @@
 import com.android.build.api.dsl.ManagedVirtualDevice
 import org.jetbrains.compose.ExperimentalComposeLibrary
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSetTree
 
 plugins {
@@ -18,8 +17,6 @@ kotlin {
         compilations.all {
             compileTaskProvider {
                 compilerOptions {
-                    jvmTarget.set(JvmTarget.JVM_1_8)
-                    freeCompilerArgs.add("-Xjdk-release=${JavaVersion.VERSION_1_8}")
                 }
             }
         }
@@ -51,10 +48,8 @@ kotlin {
             implementation(compose.components.uiToolingPreview)
 
             implementation(libs.napier)
-            implementation(libs.composeIcons.featherIcons)
             implementation(libs.kotlinx.datetime)
-
-            implementation(libs.font.awesome)
+            implementation(libs.material.icons.extended)
 
             // Voyager
             implementation(libs.voyager.navigator)
@@ -81,6 +76,10 @@ kotlin {
             implementation(libs.dataStore.preferences)
             implementation(libs.dataStore.preferences.core)
             implementation(libs.atomicfu)
+
+            // Image presentation
+            implementation(libs.kamel.image)
+
         }
 
         commonTest.dependencies {
@@ -110,7 +109,7 @@ android {
 
     defaultConfig {
         minSdk = 24
-        targetSdk = 34
+        targetSdk = 36
 
         applicationId = "org.edward.app.androidApp"
         versionCode = 1
@@ -127,7 +126,7 @@ android {
         managedDevices.allDevices {
             maybeCreate<ManagedVirtualDevice>("pixel5").apply {
                 device = "Pixel 5"
-                apiLevel = 34
+                apiLevel = 36
                 systemImageSource = "aosp"
             }
         }
