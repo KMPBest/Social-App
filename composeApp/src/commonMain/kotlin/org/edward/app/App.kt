@@ -1,5 +1,6 @@
 package org.edward.app
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
@@ -14,6 +15,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
@@ -43,7 +45,7 @@ internal fun App(context: Any? = null) {
         val dataStoreRepository: DataStoreRepository = getKoin().get<DataStoreRepository>()
         val isDarkState by dataStoreRepository.isDarkTheme().collectAsState(initial = false)
 
-        var destination: Screen = LoginScreen()
+        var entry: Screen = LoginScreen()
         var isLoading by remember { mutableStateOf(true) }
 
         val lifecycleOwner = LocalLifecycleOwner.current
@@ -55,8 +57,7 @@ internal fun App(context: Any? = null) {
                     coroutineScope.launch {
                         checkTokenValidity(dataStoreRepository).also {
                             if (it) {
-                                Napier.i { "Token is valid, navigating to Nav." }
-                                destination = BottomNav()
+                                entry = BottomNav()
                             }
                             isLoading = false
                         }
@@ -72,9 +73,11 @@ internal fun App(context: Any? = null) {
                 modifier = Modifier.fillMaxSize().windowInsetsPadding(WindowInsets.safeDrawing),
                 content = {
                     if (isLoading) {
-                        CircularProgressIndicator(modifier = Modifier.fillMaxSize())
+                        Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                            CircularProgressIndicator()
+                        }
                     } else {
-                        Navigator(destination)
+                        Navigator(entry)
                     }
                 }
             )
@@ -89,7 +92,7 @@ private suspend fun checkTokenValidity(
     Napier.i { "Checking token validity..." }
     val tokenData = dataStoreRepository.getTokenData().firstOrNull()
 
-    if (tokenData == null || tokenData.accessToken == null || tokenData.refreshToken == null) {
+    if (tokenData == null) {
         Napier.w("Token data is null, cannot check validity.")
         return false
     }

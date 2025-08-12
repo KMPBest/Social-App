@@ -73,7 +73,6 @@ class DataStoreRepositoryImpl(
         }
     }
 
-
     override fun getTokenData(): Flow<DataStoreRepository.Companion.TokenData> {
         return dataStore.data.map { preferences ->
             DataStoreRepository.Companion.TokenData(

@@ -6,7 +6,7 @@ import org.edward.app.presentations.screens.main.profile.ProfileScreenModel
 import org.koin.dsl.module
 
 val screenModelModule = module {
-    factory { LoginScreenModel(get()) }
-    factory { HomeScreenModel() }
-    factory { ProfileScreenModel() }
+    factory { LoginScreenModel(get(), get()) }
+    factory { HomeScreenModel(get()) }
+    factory { ProfileScreenModel(get()) }
 }

@@ -2,20 +2,22 @@ package org.edward.app.presentations.screens.auth.login
 
 import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import org.edward.app.data.local.DataStoreRepository
+import org.edward.app.data.remote.auth.AuthRepository
+import org.edward.app.data.remote.auth.LoginRequest
+import org.edward.app.data.utils.AsyncResult
 import org.koin.core.component.KoinComponent
 
-
 class LoginScreenModel(
-    private val dataStoreRepository: DataStoreRepository
+    private val dataStoreRepository: DataStoreRepository,
+    private val authRepository: AuthRepository,
 ) : ScreenModel, KoinComponent {
     data class LoginUiState(
-        val email: String = "",
-        val password: String = "",
+        val email: String = "john_doe",
+        val password: String = "pass123",
         val isLoading: Boolean = false,
         val error: String? = null
     )
@@ -36,17 +38,33 @@ class LoginScreenModel(
         screenModelScope.launch {
             _uiState.value = _uiState.value.copy(isLoading = true, error = null)
 
-            delay(1000)
-
-            if (_uiState.value.email.isNotBlank() && _uiState.value.password.isNotBlank()) {
-                dataStoreRepository.saveAccessToken("fake_access_token_123", ttl = 3600)
-                dataStoreRepository.saveRefreshToken("fake_refresh_token_456", ttl = 7200)
-                onSuccess()
-            } else {
+            if (_uiState.value.email.isBlank() || _uiState.value.password.isBlank()) {
                 _uiState.value = _uiState.value.copy(
                     isLoading = false,
-                    error = "Invalid email or password"
+                    error = "Email and password cannot be empty"
                 )
+                return@launch
+            }
+
+            when (val result =
+                authRepository.login(
+                    LoginRequest(
+                        username = _uiState.value.email,
+                        password = _uiState.value.password
+                    )
+                )) {
+                is AsyncResult.Success -> {
+                    dataStoreRepository.saveAccessToken(result.data.token, 3600)
+                    _uiState.value = _uiState.value.copy(isLoading = false)
+                    onSuccess()
+                }
+
+                is AsyncResult.Error -> {
+                    _uiState.value = _uiState.value.copy(
+                        isLoading = false,
+                        error = result.displayMessage
+                    )
+                }
             }
         }
     }

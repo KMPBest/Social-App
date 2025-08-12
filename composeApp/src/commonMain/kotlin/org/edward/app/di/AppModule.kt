@@ -6,9 +6,9 @@ import org.edward.app.shared.createDataStore
 import org.koin.dsl.module
 
 fun appModule(context: Any? = null) = listOf(
-    networkModule, screenModelModule, repositoryModule, module {
+    screenModelModule, repositoryModule, module {
         single<DataStoreRepository> {
             DataStoreRepositoryImpl(createDataStore(context))
         }
-    }
+    }, networkModule
 )
