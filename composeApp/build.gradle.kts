@@ -2,6 +2,7 @@ import com.android.build.api.dsl.ManagedVirtualDevice
 import org.jetbrains.compose.ExperimentalComposeLibrary
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSetTree
+import java.util.Properties
 
 plugins {
     alias(libs.plugins.multiplatform)
@@ -80,6 +81,10 @@ kotlin {
             // Image presentation
             implementation(libs.kamel.image)
 
+            implementation(libs.openai.client)
+
+            implementation(libs.java.dotenv)
+
         }
 
         commonTest.dependencies {
@@ -143,6 +148,37 @@ android {
 }
 
 buildConfig {
-    // BuildConfig configuration here.
-    // https://github.com/gmazzo/gradle-buildconfig-plugin#usage-in-kts
+    val envFile = rootProject.file(".env")
+    val envProps = Properties()
+    if (envFile.exists()) {
+        envFile.inputStream().use { envProps.load(it) }
+    }
+
+    val generateEnvConfig by tasks.registering {
+        val outputDir = project.layout.buildDirectory.dir("generated/env")
+        inputs.file(envFile)
+        outputs.dir(outputDir)
+
+        doLast {
+            val file = outputDir.get().file("EnvConfig.kt").asFile
+            file.parentFile.mkdirs()
+            file.writeText(buildString {
+                appendLine("package com.example.config")
+                appendLine("")
+                appendLine("object EnvConfig {")
+                envProps.forEach { (key, value) ->
+                    appendLine("    const val ${key.toString().uppercase()} = \"${value}\"")
+                }
+                appendLine("}")
+            })
+        }
+    }
+    
+    kotlin.sourceSets.getByName("commonMain").kotlin.srcDir(
+        project.layout.buildDirectory.dir("generated/env")
+    )
+
+    tasks.named("compileKotlinMetadata").configure {
+        dependsOn(generateEnvConfig)
+    }
 }

@@ -30,6 +30,7 @@ import org.edward.app.data.local.DataStoreRepository
 import org.edward.app.di.appModule
 import org.edward.app.presentations.navigations.BottomNav
 import org.edward.app.presentations.screens.auth.login.LoginScreen
+import org.edward.app.presentations.screens.chat.ChatScreen
 import org.edward.app.presentations.theme.AppTheme
 import org.edward.app.shared.initLogger
 import org.koin.compose.KoinApplication
@@ -77,7 +78,7 @@ internal fun App(context: Any? = null) {
                             CircularProgressIndicator()
                         }
                     } else {
-                        Navigator(entry)
+                        Navigator(ChatScreen())
                     }
                 }
             )

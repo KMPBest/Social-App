@@ -16,8 +16,8 @@ class LoginScreenModel(
     private val authRepository: AuthRepository,
 ) : ScreenModel, KoinComponent {
     data class LoginUiState(
-        val email: String = "john_doe",
-        val password: String = "pass123",
+        val email: String = "mor_2314",
+        val password: String = "83r5^_",
         val isLoading: Boolean = false,
         val error: String? = null
     )
