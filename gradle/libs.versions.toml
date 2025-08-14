@@ -1,12 +1,11 @@
 [versions]
 
-javaDotenv = "5.2.2"
 kamelImage = "1.0.7"
 kotlin = "2.2.0"
 compose = "1.8.2"
 agp = "8.12.0"
 androidx-activityCompose = "1.10.1"
-androidx-uiTest = "1.8.3"
+androidx-uiTest = "1.9.0"
 materialIconsExtended = "1.7.3"
 openaiClient = "4.0.1"
 voyager = "1.1.0-beta03"
@@ -24,7 +23,6 @@ atomicfu = "0.29.0"
 androidx-activityCompose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
 androidx-testManifest = { module = "androidx.compose.ui:ui-test-manifest", version.ref = "androidx-uiTest" }
 androidx-junit4 = { module = "androidx.compose.ui:ui-test-junit4", version.ref = "androidx-uiTest" }
-java-dotenv = { module = "io.github.cdimascio:java-dotenv", version.ref = "javaDotenv" }
 kamel-image = { module = "media.kamel:kamel-image-default", version.ref = "kamelImage" }
 material-icons-extended = { module = "org.jetbrains.compose.material:material-icons-extended", version.ref = "materialIconsExtended" }
 napier = { module = "io.github.aakira:napier", version.ref = "napier" }

@@ -11,13 +11,14 @@ import io.github.aakira.napier.Napier
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import org.edward.app.config.EnvConfig
 import org.koin.core.component.KoinComponent
 import kotlin.random.Random
 import kotlin.time.ExperimentalTime
 
 class ChatScreenModel : ScreenModel, KoinComponent {
 
-    private val openAI = OpenAI("")
+    private val openAI = OpenAI(EnvConfig.OPEN_AI_KEY)
 
     data class ClientChatMessage @OptIn(ExperimentalTime::class) constructor(
         val text: String,
@@ -91,7 +92,7 @@ class ChatScreenModel : ScreenModel, KoinComponent {
 
         val completion = openAI.chatCompletion(
             request = ChatCompletionRequest(
-                model = ModelId(""),
+                model = ModelId(EnvConfig.OPEN_AI_MODEL),
                 messages = chatMessages,
             )
         )

@@ -83,8 +83,6 @@ kotlin {
 
             implementation(libs.openai.client)
 
-            implementation(libs.java.dotenv)
-
         }
 
         commonTest.dependencies {
@@ -163,7 +161,7 @@ buildConfig {
             val file = outputDir.get().file("EnvConfig.kt").asFile
             file.parentFile.mkdirs()
             file.writeText(buildString {
-                appendLine("package com.example.config")
+                appendLine("package org.edward.app.config")
                 appendLine("")
                 appendLine("object EnvConfig {")
                 envProps.forEach { (key, value) ->
@@ -173,7 +171,7 @@ buildConfig {
             })
         }
     }
-    
+
     kotlin.sourceSets.getByName("commonMain").kotlin.srcDir(
         project.layout.buildDirectory.dir("generated/env")
     )
