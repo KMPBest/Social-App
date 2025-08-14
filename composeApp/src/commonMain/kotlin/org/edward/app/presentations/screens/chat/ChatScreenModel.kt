@@ -2,23 +2,16 @@ package org.edward.app.presentations.screens.chat
 
 import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
-import com.aallam.openai.api.chat.ChatCompletionRequest
-import com.aallam.openai.api.chat.ChatMessage
-import com.aallam.openai.api.chat.ChatRole
-import com.aallam.openai.api.model.ModelId
-import com.aallam.openai.client.OpenAI
-import io.github.aakira.napier.Napier
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import org.edward.app.config.EnvConfig
+import org.edward.app.data.remote.openai.OpenAIRepository
+import org.edward.app.data.utils.AsyncResult
 import org.koin.core.component.KoinComponent
 import kotlin.random.Random
 import kotlin.time.ExperimentalTime
 
-class ChatScreenModel : ScreenModel, KoinComponent {
-
-    private val openAI = OpenAI(EnvConfig.OPEN_AI_KEY)
+class ChatScreenModel(private val openAIRepository: OpenAIRepository) : ScreenModel, KoinComponent {
 
     data class ClientChatMessage @OptIn(ExperimentalTime::class) constructor(
         val text: String,
@@ -29,6 +22,7 @@ class ChatScreenModel : ScreenModel, KoinComponent {
     data class ChatUiState(
         val currentInput: String = "",
         val isThinking: Boolean = false,
+        val error: String? = null,
         var messages: List<ClientChatMessage> = emptyList()
     )
 
@@ -55,50 +49,28 @@ class ChatScreenModel : ScreenModel, KoinComponent {
                 isThinking = true
             )
 
-            try {
-                val reply = ask(tempText)
+            val reply = openAIRepository.ask(tempText)
 
-                _uiState.value = _uiState.value.copy(
-                    messages = _uiState.value.messages + ClientChatMessage(reply, false),
-                    isThinking = false
-                )
-            } catch (e: Exception) {
-                _uiState.value = _uiState.value.copy(
-                    messages = _uiState.value.messages + ClientChatMessage(
-                        "Error: ${e.message}",
-                        false
-                    ),
-                    isThinking = false
-                )
+            when (reply) {
+                is AsyncResult.Success -> {
+                    _uiState.value = _uiState.value.copy(
+                        messages = _uiState.value.messages + ClientChatMessage(
+                            text = reply.data,
+                            isUser = false
+                        ),
+                        isThinking = false
+                    )
+                }
+
+                is AsyncResult.Error -> {
+                    _uiState.value = _uiState.value.copy(
+                        error = reply.displayMessage ?: "An error occurred",
+                        isThinking = false
+                    )
+                }
             }
+
         }
     }
 
-    suspend fun ask(messages: String): String {
-        val chatMessages = buildList {
-            add(
-                ChatMessage(
-                    ChatRole.System,
-                    "Bạn là người tư vấn giải đáp về bảo hiểm, hãy trả lời chi tiết nhất có thể"
-                )
-            )
-            add(
-                ChatMessage(
-                    ChatRole.User,
-                    messages
-                )
-            )
-        }
-
-        val completion = openAI.chatCompletion(
-            request = ChatCompletionRequest(
-                model = ModelId(EnvConfig.OPEN_AI_MODEL),
-                messages = chatMessages,
-            )
-        )
-
-        Napier.i(completion.toString())
-
-        return completion.choices.firstOrNull()?.message?.content ?: "No response."
-    }
 }

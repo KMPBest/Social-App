@@ -1,14 +1,10 @@
 package org.edward.app.di
 
-import org.edward.app.data.local.DataStoreRepository
-import org.edward.app.data.local.DataStoreRepositoryImpl
-import org.edward.app.shared.createDataStore
-import org.koin.dsl.module
+import org.edward.app.data.local.dataStoreModule
+import org.edward.app.data.network.networkModule
+import org.edward.app.data.remote.remoteModule
+import org.edward.app.presentations.screens.screenModelModule
 
-fun appModule(context: Any? = null) = listOf(
-    screenModelModule, repositoryModule, module {
-        single<DataStoreRepository> {
-            DataStoreRepositoryImpl(createDataStore(context))
-        }
-    }, networkModule
+fun appModule(context: Any?) = listOf(
+    dataStoreModule(context), screenModelModule, remoteModule, networkModule
 )

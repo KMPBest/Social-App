@@ -1,4 +1,4 @@
-package org.edward.app.di
+package org.edward.app.data.network
 
 import io.github.aakira.napier.Napier
 import io.ktor.client.HttpClient

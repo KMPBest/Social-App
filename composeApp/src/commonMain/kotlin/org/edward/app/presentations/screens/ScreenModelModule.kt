@@ -1,4 +1,4 @@
-package org.edward.app.di
+package org.edward.app.presentations.screens
 
 import org.edward.app.presentations.screens.auth.login.LoginScreenModel
 import org.edward.app.presentations.screens.chat.ChatScreenModel
@@ -10,5 +10,5 @@ val screenModelModule = module {
     factory { LoginScreenModel(get(), get()) }
     factory { HomeScreenModel(get()) }
     factory { ProfileScreenModel(get()) }
-    factory { ChatScreenModel() }
+    factory { ChatScreenModel(get()) }
 }
