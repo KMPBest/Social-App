@@ -1,7 +1,7 @@
 package org.edward.app.presentations.theme
 
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
-import androidx.compose.material3.MaterialExpressiveTheme
+import androidx.compose.material3.MotionScheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
@@ -9,10 +9,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.ui.graphics.Color
+import com.materialkolor.DynamicMaterialExpressiveTheme
 import com.materialkolor.PaletteStyle
 import com.materialkolor.dynamiccolor.ColorSpec
-import com.materialkolor.rememberDynamicColorScheme
+import com.materialkolor.rememberDynamicMaterialThemeState
 import org.edward.app.shared.SystemAppearance
 
 private val lightScheme = lightColorScheme(
@@ -251,17 +251,19 @@ internal fun AppTheme(
     isDark: Boolean,
     content: @Composable () -> Unit,
 ) {
+    val dynamicThemeState = rememberDynamicMaterialThemeState(
+        isDark = isDark,
+        style = PaletteStyle.Expressive,
+        specVersion = ColorSpec.SpecVersion.SPEC_2025,
+        seedColor = SeedColor,
+    )
+
     CompositionLocalProvider(LocalThemeIsDark provides mutableStateOf(isDark)) {
         SystemAppearance(!isDark)
-        MaterialExpressiveTheme(
-            colorScheme = rememberDynamicColorScheme(
-                seedColor = Color(0xFF6750A4),
-                primary = if (isDark) Color(0xFFCFBCFF) else Color(0xFF6750A4),
-                secondary = if (isDark) Color(0xFFCCC2DC) else Color(0xFF625B71),
-                isDark = isDark,
-                style = PaletteStyle.Neutral,
-                specVersion = ColorSpec.SpecVersion.SPEC_2025,
-            ),
+        DynamicMaterialExpressiveTheme(
+            state = dynamicThemeState,
+            motionScheme = MotionScheme.expressive(),
+            animate = true,
             content = { Surface(content = content) }
         )
     }

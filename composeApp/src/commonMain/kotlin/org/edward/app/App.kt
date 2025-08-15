@@ -5,7 +5,8 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.windowInsetsPadding
-import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
+import androidx.compose.material3.LoadingIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.collectAsState
@@ -28,7 +29,6 @@ import kotlinx.coroutines.launch
 import org.edward.app.data.local.DataStoreRepository
 import org.edward.app.di.appModule
 import org.edward.app.presentations.navigations.BottomNav
-import org.edward.app.presentations.screens.chat.ChatScreen
 import org.edward.app.presentations.screens.components.KeyboardAwareContainer
 import org.edward.app.presentations.theme.AppTheme
 import org.edward.app.shared.initLogger
@@ -37,6 +37,7 @@ import org.koin.mp.KoinPlatform.getKoin
 import kotlin.time.Clock
 import kotlin.time.ExperimentalTime
 
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 internal fun App(context: Any? = null) {
     initLogger()
@@ -45,7 +46,7 @@ internal fun App(context: Any? = null) {
         val dataStoreRepository: DataStoreRepository = getKoin().get<DataStoreRepository>()
         val isDarkState by dataStoreRepository.isDarkTheme().collectAsState(initial = false)
 
-        var entry: Screen = ChatScreen()
+        var entry: Screen = BottomNav()
         var isLoading by remember { mutableStateOf(true) }
 
         val lifecycleOwner = LocalLifecycleOwner.current
@@ -74,7 +75,7 @@ internal fun App(context: Any? = null) {
                 content = {
                     if (isLoading) {
                         Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                            CircularProgressIndicator()
+                            LoadingIndicator()
                         }
                     } else {
                         Navigator(entry)

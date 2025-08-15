@@ -110,7 +110,6 @@ class ChatScreen : Screen, KoinComponent {
                     onValueChange = viewModel::onInputChange,
                     placeholder = { Text("Type a message...") },
                     singleLine = true,
-                    shape = CircleShape,
                     keyboardOptions = KeyboardOptions(
                         capitalization = KeyboardCapitalization.None,
                         autoCorrectEnabled = false,
