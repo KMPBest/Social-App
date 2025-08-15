@@ -10,5 +10,5 @@ val screenModelModule = module {
     factory { LoginScreenModel(get(), get()) }
     factory { HomeScreenModel(get()) }
     factory { ProfileScreenModel(get()) }
-    factory { ChatScreenModel(get()) }
+    factory { ChatScreenModel(get(), get()) }
 }

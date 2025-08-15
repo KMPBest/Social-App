@@ -4,14 +4,19 @@ import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
+import org.edward.app.data.local.DataStoreRepository
 import org.edward.app.data.remote.openai.OpenAIRepository
 import org.edward.app.data.utils.AsyncResult
 import org.koin.core.component.KoinComponent
 import kotlin.random.Random
 import kotlin.time.ExperimentalTime
 
-class ChatScreenModel(private val openAIRepository: OpenAIRepository) : ScreenModel, KoinComponent {
+class ChatScreenModel(
+    private val openAIRepository: OpenAIRepository,
+    private val dataStoreRepository: DataStoreRepository
+) : ScreenModel, KoinComponent {
 
     data class ClientChatMessage @OptIn(ExperimentalTime::class) constructor(
         val text: String,
@@ -70,6 +75,14 @@ class ChatScreenModel(private val openAIRepository: OpenAIRepository) : ScreenMo
                 }
             }
 
+        }
+    }
+
+    fun changeTheme() {
+        screenModelScope.launch {
+            val isDarkState = dataStoreRepository.isDarkTheme().firstOrNull() ?: false
+
+            dataStoreRepository.saveDarkTheme(!isDarkState)
         }
     }
 

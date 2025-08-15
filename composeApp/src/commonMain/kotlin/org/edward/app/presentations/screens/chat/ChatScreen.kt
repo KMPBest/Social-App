@@ -2,7 +2,6 @@ package org.edward.app.presentations.screens.chat
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
-import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -22,6 +21,7 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Send
+import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -42,8 +42,6 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
@@ -64,24 +62,23 @@ class ChatScreen : Screen, KoinComponent {
         val viewModel = koinScreenModel<ChatScreenModel>()
         val uiState by viewModel.uiState.collectAsState()
         val focusRequester = remember { FocusRequester() }
-        val focusManager = LocalFocusManager.current
         var isFocused by remember { mutableStateOf(false) }
 
         Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(MaterialTheme.colorScheme.background)
-                .pointerInput(Unit) {
-                    detectTapGestures(onTap = {
-                        focusManager.clearFocus()
-                    })
-                }
+            modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)
         ) {
             val listState = rememberLazyListState()
 
             LaunchedEffect(uiState.messages.size, uiState.isThinking) {
                 snapshotFlow { listState.layoutInfo.totalItemsCount }.first { it > 0 }
                 listState.animateScrollToItem(0)
+            }
+
+            Button(
+                onClick = { viewModel.changeTheme() },
+                modifier = Modifier.padding(8.dp).align(Alignment.End)
+            ) {
+                Text("Change Theme")
             }
 
             LazyColumn(
@@ -153,7 +150,12 @@ class ChatScreen : Screen, KoinComponent {
 
     @Composable
     fun ChatBubble(message: ChatScreenModel.ClientChatMessage) {
-        val bubbleColor = if (message.isUser) Color(0xFFDCF8C6) else Color(0xFFFFFFFF)
+        val bubbleColor =
+            if (message.isUser) MaterialTheme.colorScheme.primaryContainer else MaterialTheme.colorScheme.secondaryContainer
+
+        val textColor =
+            if (message.isUser) MaterialTheme.colorScheme.onPrimaryContainer else MaterialTheme.colorScheme.onSecondaryContainer
+
         val bubbleShape = if (message.isUser) {
             RoundedCornerShape(
                 topStart = 12.dp,
@@ -184,7 +186,7 @@ class ChatScreen : Screen, KoinComponent {
                     text = message.text,
                     fontSize = 16.sp,
                     textAlign = TextAlign.Start,
-                    color = Color.Black
+                    color = textColor,
                 )
             }
         }

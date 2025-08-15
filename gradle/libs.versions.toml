@@ -1,7 +1,7 @@
 [versions]
 
 kamelImage = "1.0.7"
-kotlin = "2.2.0"
+kotlin = "2.2.10"
 compose = "1.8.2"
 agp = "8.12.0"
 androidx-activityCompose = "1.10.1"
@@ -17,6 +17,7 @@ kotlinx-datetime = "0.7.1"
 koin = "4.1.0"
 dataStore = "1.1.7"
 atomicfu = "0.29.0"
+materialKolor = "3.0.1"
 
 [libraries]
 
@@ -28,6 +29,7 @@ material-icons-extended = { module = "org.jetbrains.compose.material:material-ic
 napier = { module = "io.github.aakira:napier", version.ref = "napier" }
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinx-datetime" }
 atomicfu = { module = "org.jetbrains.kotlinx:atomicfu", version.ref = "atomicfu" }
+materialKolor = { module = "com.materialkolor:material-kolor", version.ref = "materialKolor" }
 
 #Ktor
 ktor-core = { group = "io.ktor", name = "ktor-client-core", version.ref = "ktor" }

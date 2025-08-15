@@ -51,6 +51,7 @@ kotlin {
             implementation(libs.napier)
             implementation(libs.kotlinx.datetime)
             implementation(libs.material.icons.extended)
+            implementation(libs.materialKolor)
 
             // Voyager
             implementation(libs.voyager.navigator)

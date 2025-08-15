@@ -23,6 +23,7 @@ import androidx.compose.material3.DividerDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -67,16 +68,10 @@ class LoginScreen : Screen, KoinComponent {
                 horizontalArrangement = Arrangement.End,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text(
-                    "Don’t have an account?",
-                    color = Color.White,
-                    fontSize = 14.sp
-                )
+                Text("Don’t have an account?")
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(
                     "Get Started",
-                    color = Color.White,
-                    fontSize = 14.sp,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier
                         .clip(RoundedCornerShape(12.dp))
@@ -91,7 +86,6 @@ class LoginScreen : Screen, KoinComponent {
                 "Edward",
                 fontSize = 28.sp,
                 fontWeight = FontWeight.Bold,
-                color = Color(0xFFFFFFFF),
                 modifier = Modifier.align(Alignment.CenterHorizontally)
             )
 
@@ -101,7 +95,7 @@ class LoginScreen : Screen, KoinComponent {
                 modifier = Modifier
                     .fillMaxSize()
                     .clip(RoundedCornerShape(topStart = 32.dp, topEnd = 32.dp))
-                    .background(Color.White)
+                    .background(MaterialTheme.colorScheme.background)
                     .padding(24.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
@@ -148,19 +142,11 @@ class LoginScreen : Screen, KoinComponent {
                     shape = RoundedCornerShape(12.dp)
                 ) {
                     Box(
-                        modifier = Modifier
-                            .background(
-                                Brush.horizontalGradient(
-                                    listOf(Color(0xFF4A00E0), Color(0xFF8E2DE2))
-                                ),
-                                RoundedCornerShape(12.dp)
-                            )
-                            .fillMaxSize(),
+                        modifier = Modifier.fillMaxSize(),
                         contentAlignment = Alignment.Center
                     ) {
                         Text(
                             "Sign in",
-                            color = Color.White,
                             fontSize = 16.sp,
                             fontWeight = FontWeight.Bold
                         )
@@ -172,7 +158,6 @@ class LoginScreen : Screen, KoinComponent {
                 Text(
                     "Forgot your password?",
                     fontSize = 14.sp,
-                    color = Color(0xFF4A00E0),
                     modifier = Modifier.clickable { }
                 )
 

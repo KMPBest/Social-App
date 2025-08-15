@@ -1,7 +1,6 @@
 package org.edward.app
 
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.safeDrawing
@@ -29,8 +28,8 @@ import kotlinx.coroutines.launch
 import org.edward.app.data.local.DataStoreRepository
 import org.edward.app.di.appModule
 import org.edward.app.presentations.navigations.BottomNav
-import org.edward.app.presentations.screens.auth.login.LoginScreen
 import org.edward.app.presentations.screens.chat.ChatScreen
+import org.edward.app.presentations.screens.components.KeyboardAwareContainer
 import org.edward.app.presentations.theme.AppTheme
 import org.edward.app.shared.initLogger
 import org.koin.compose.KoinApplication
@@ -46,7 +45,7 @@ internal fun App(context: Any? = null) {
         val dataStoreRepository: DataStoreRepository = getKoin().get<DataStoreRepository>()
         val isDarkState by dataStoreRepository.isDarkTheme().collectAsState(initial = false)
 
-        var entry: Screen = LoginScreen()
+        var entry: Screen = ChatScreen()
         var isLoading by remember { mutableStateOf(true) }
 
         val lifecycleOwner = LocalLifecycleOwner.current
@@ -70,7 +69,7 @@ internal fun App(context: Any? = null) {
         }
 
         AppTheme(isDarkState) {
-            Column(
+            KeyboardAwareContainer(
                 modifier = Modifier.fillMaxSize().windowInsetsPadding(WindowInsets.safeDrawing),
                 content = {
                     if (isLoading) {
@@ -78,7 +77,7 @@ internal fun App(context: Any? = null) {
                             CircularProgressIndicator()
                         }
                     } else {
-                        Navigator(ChatScreen())
+                        Navigator(entry)
                     }
                 }
             )
