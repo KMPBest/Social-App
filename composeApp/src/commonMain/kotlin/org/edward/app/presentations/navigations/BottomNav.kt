@@ -66,37 +66,6 @@ class BottomNav(private val firstScreen: Tab = HomeScreen()) : Screen {
 }
 
 @Composable
-private fun RowScope.TabNavigationItem(tab: Tab) {
-    val tabNavigator = LocalTabNavigator.current
-
-    NavigationBarItem(
-        selected = tabNavigator.current == tab,
-        onClick = { tabNavigator.current = tab },
-        icon = {
-            tab.options.icon?.let {
-                Icon(
-                    painter = it, contentDescription = tab.options.title
-                )
-            }
-        },
-        label = { Text(tab.options.title) },
-        alwaysShowLabel = false,
-//        modifier = Modifier.drawBehind {
-//            if (tabNavigator.current == tab) {
-//                val strokeWidth = 2.dp.toPx()
-//                val y = strokeWidth / 2
-//                drawLine(
-//                    color = Color.Red,
-//                    start = Offset(32f, y),
-//                    end = Offset(size.width - 32f, y),
-//                    strokeWidth = strokeWidth
-//                )
-//            }
-//        }
-    )
-}
-
-@Composable
 private fun RowScope.AnimatedTabNavigationItem(tab: Tab) {
     val tabNavigator = LocalTabNavigator.current
     val selected = tabNavigator.current == tab
