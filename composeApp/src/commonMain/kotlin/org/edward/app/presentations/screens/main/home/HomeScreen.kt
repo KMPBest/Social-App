@@ -37,6 +37,7 @@ import cafe.adriel.voyager.navigator.tab.TabOptions
 import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
 import org.edward.app.data.remote.product.Product
+import org.edward.app.presentations.screens.components.PullToRefreshBox
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.core.component.KoinComponent
 
@@ -58,7 +59,7 @@ class HomeScreen : Tab, KoinComponent {
         val state by screenModel.uiState.collectAsState()
 
         LaunchedEffect(Unit) {
-            screenModel.loadProducts()
+            screenModel.initData()
         }
 
         when {
@@ -75,12 +76,17 @@ class HomeScreen : Tab, KoinComponent {
             }
 
             else -> {
-                LazyColumn(
-                    modifier = Modifier.fillMaxSize().padding(8.dp),
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                PullToRefreshBox(
+                    isRefreshing = state.isRefreshing,
+                    onRefresh = { screenModel.onPullToRefreshTrigger() },
                 ) {
-                    items(state.products) { product ->
-                        ProductCard(product)
+                    LazyColumn(
+                        modifier = Modifier.fillMaxSize().padding(8.dp),
+                        verticalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        items(state.products) { product ->
+                            ProductCard(product)
+                        }
                     }
                 }
             }

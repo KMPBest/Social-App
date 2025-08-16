@@ -1,7 +1,7 @@
 package org.edward.app.presentations.theme
 
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
-import androidx.compose.material3.MotionScheme
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
@@ -9,10 +9,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.mutableStateOf
-import com.materialkolor.DynamicMaterialExpressiveTheme
-import com.materialkolor.PaletteStyle
-import com.materialkolor.dynamiccolor.ColorSpec
-import com.materialkolor.rememberDynamicMaterialThemeState
 import org.edward.app.shared.SystemAppearance
 
 private val lightScheme = lightColorScheme(
@@ -251,20 +247,15 @@ internal fun AppTheme(
     isDark: Boolean,
     content: @Composable () -> Unit,
 ) {
-    val dynamicThemeState = rememberDynamicMaterialThemeState(
-        isDark = isDark,
-        style = PaletteStyle.Expressive,
-        specVersion = ColorSpec.SpecVersion.SPEC_2025,
-        seedColor = SeedColor,
-    )
-
     CompositionLocalProvider(LocalThemeIsDark provides mutableStateOf(isDark)) {
+
         SystemAppearance(!isDark)
-        DynamicMaterialExpressiveTheme(
-            state = dynamicThemeState,
-            motionScheme = MotionScheme.expressive(),
-            animate = true,
-            content = { Surface(content = content) }
-        )
+
+        MaterialTheme(
+            colorScheme = if (isDark) darkScheme else lightScheme
+        ) {
+            Surface(content = content)
+        }
+
     }
 }
