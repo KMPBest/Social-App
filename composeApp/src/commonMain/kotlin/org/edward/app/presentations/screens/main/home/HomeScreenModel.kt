@@ -17,12 +17,19 @@ class HomeScreenModel(private val productRepository: ProductRepository) :
         data class UiState(
             val loading: Boolean = true,
             val products: List<Product> = emptyList(),
-            val error: String? = null
+            val error: String? = null,
+            val isRefreshing: Boolean = false
         )
     }
 
     private val _uiState = MutableStateFlow(UiState())
     val uiState: StateFlow<UiState> = _uiState
+
+    fun initData() {
+        if (_uiState.value.products.isNotEmpty())
+            return
+        loadProducts()
+    }
 
     fun loadProducts() {
         screenModelScope.launch {
@@ -43,6 +50,14 @@ class HomeScreenModel(private val productRepository: ProductRepository) :
                     )
                 }
             }
+        }
+    }
+
+    fun onPullToRefreshTrigger() {
+        _uiState.value = _uiState.value.copy(isRefreshing = true)
+        screenModelScope.launch {
+            loadProducts()
+            _uiState.value = _uiState.value.copy(isRefreshing = false)
         }
     }
 }
