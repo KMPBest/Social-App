@@ -16,10 +16,13 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ChevronRight
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -31,6 +34,7 @@ import androidx.compose.ui.graphics.DefaultAlpha
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
@@ -65,27 +69,16 @@ class ProfileScreen : Tab, KoinComponent {
         }
     }
 
+    @OptIn(ExperimentalMaterial3Api::class)
     @Preview
     @Composable
     fun Header() {
-        val borderColor = Color.LightGray
-        Column(
-            modifier = Modifier.fillMaxWidth().height(48.dp)
-                .drawBehind {
-                    val strokeWidth = 2.dp.toPx()
-                    val y = size.height - strokeWidth / 2
-                    drawLine(
-                        color = borderColor,
-                        start = Offset(0f, y),
-                        end = Offset(size.width, y),
-                        strokeWidth = strokeWidth,
-                    )
-                },
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
-        ) {
-            Text("Account", fontWeight = FontWeight.W600, fontSize = TextUnit(18.0.toFloat(), TextUnitType.Sp))
-        }
+        CenterAlignedTopAppBar(title = {
+            Text("Account",
+                fontWeight = FontWeight.W600,
+                fontSize = TextUnit(18.0.toFloat(), TextUnitType.Sp),
+            ) }
+        )
     }
 
     @Preview
@@ -97,7 +90,6 @@ class ProfileScreen : Tab, KoinComponent {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 24.dp)
                 .padding(horizontal = 16.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {

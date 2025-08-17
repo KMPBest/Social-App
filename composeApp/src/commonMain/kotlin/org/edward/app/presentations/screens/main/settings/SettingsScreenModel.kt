@@ -23,7 +23,7 @@ class SettingsScreenModel(private val dataStoreRepository: DataStoreRepository) 
     fun loadData() {
         screenModelScope.launch {
             val isDarkState = dataStoreRepository.isDarkTheme().firstOrNull() ?: false
-            _uiState.value = _uiState.value.copy(isDarkTheme = !isDarkState);
+            _uiState.value = _uiState.value.copy(isDarkTheme = isDarkState);
         }
     }
 

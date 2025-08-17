@@ -5,17 +5,23 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ChevronLeft
+import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -49,48 +55,39 @@ class SettingsScreen : Screen, KoinComponent {
             screenModel.loadData()
         }
 
-        Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
+        Column(Modifier.fillMaxWidth()) {
             Header()
             SettingsList(state, screenModel)
+
         }
+
     }
 
+    @OptIn(ExperimentalMaterial3Api::class)
     @Preview
     @Composable
     fun Header() {
         val navigator = LocalNavigator.currentOrThrow
 
-        val borderColor = Color.LightGray
-        Row(
-            modifier = Modifier.fillMaxWidth().height(48.dp)
-                .drawBehind {
-                    val strokeWidth = 2.dp.toPx()
-                    val y = size.height - strokeWidth / 2
-                    drawLine(
-                        color = borderColor,
-                        start = Offset(0f, y),
-                        end = Offset(size.width, y),
-                        strokeWidth = strokeWidth,
+        CenterAlignedTopAppBar(title = {
+            Text("Settings",
+                fontWeight = FontWeight.W600,
+                fontSize = TextUnit(18.0.toFloat(), TextUnitType.Sp),
+            ) },
+            navigationIcon = {
+                IconButton(
+                    modifier = Modifier.size(40.dp).padding(start = 16.dp),
+                    onClick = {
+                        navigator.pop()
+                    }) {
+                    Icon(
+                        imageVector = Icons.Default.ChevronLeft,
+                        contentDescription = "",
+                        tint = MaterialTheme.colorScheme.primary
                     )
-                },
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            IconButton(
-                modifier = Modifier.size(40.dp).padding(start = 16.dp),
-                onClick = {
-                navigator.pop()
-            }) {
-                Icon(
-                    imageVector = Icons.Default.ChevronLeft,
-                    contentDescription = "" ,
-                    tint = MaterialTheme.colorScheme.primary
-                )
-            }
-            Text("Settings", fontWeight = FontWeight.W600, fontSize = TextUnit(18.0.toFloat(), TextUnitType.Sp))
-
-            Box(Modifier.size(40.dp).padding(end = 16.dp))
-        }
+                }
+            },
+        )
     }
 
     @Preview
