@@ -22,19 +22,15 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.drawBehind
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.DefaultAlpha
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
@@ -61,10 +57,9 @@ class ProfileScreen : Tab, KoinComponent {
     @Preview
     @Composable
     override fun Content() {
-
         Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
             Header()
-            UserInfo()
+            UserInformation()
             GeneralInformation()
         }
     }
@@ -74,18 +69,21 @@ class ProfileScreen : Tab, KoinComponent {
     @Composable
     fun Header() {
         CenterAlignedTopAppBar(title = {
-            Text("Account",
+            Text(
+                "Account",
                 fontWeight = FontWeight.W600,
                 fontSize = TextUnit(18.0.toFloat(), TextUnitType.Sp),
-            ) }
+            )
+        }
         )
     }
 
     @Preview
     @Composable
-    fun UserInfo() {
+    fun UserInformation() {
 
-        val url = "https://plus.unsplash.com/premium_photo-1749669869018-8a33825100f0?q=80&w=988&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+        val url =
+            "https://plus.unsplash.com/premium_photo-1749669869018-8a33825100f0?q=80&w=988&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
 
         Row(
             modifier = Modifier
@@ -93,10 +91,11 @@ class ProfileScreen : Tab, KoinComponent {
                 .padding(horizontal = 16.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            if (!url.isNullOrBlank()) {
-                Box(Modifier
-                    .size(80.dp)
-                    .clip(CircleShape)
+            if (url.isNotBlank()) {
+                Box(
+                    Modifier
+                        .size(80.dp)
+                        .clip(CircleShape)
                 ) {
                     KamelImage(
                         { asyncPainterResource(url) },
@@ -110,14 +109,17 @@ class ProfileScreen : Tab, KoinComponent {
                     )
                 }
             } else {
-                Box(Modifier
-                    .size(80.dp)
-                    .background(MaterialTheme.colorScheme.primary, shape = CircleShape),
+                Box(
+                    Modifier
+                        .size(80.dp)
+                        .background(MaterialTheme.colorScheme.primary, shape = CircleShape),
                     contentAlignment = Alignment.Center
-                ){
-                    Icon(imageVector = Icons.Default.Person, contentDescription = "Default icon",
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Person, contentDescription = "Default icon",
                         modifier = Modifier.size(48.dp),
-                        tint = MaterialTheme.colorScheme.surface)
+                        tint = MaterialTheme.colorScheme.surface
+                    )
                 }
 
             }
@@ -128,7 +130,11 @@ class ProfileScreen : Tab, KoinComponent {
                 verticalArrangement = Arrangement.Center,
             ) {
                 Text("Operator", style = MaterialTheme.typography.bodyMedium)
-                Text("operator@gmail.com", style = MaterialTheme.typography.bodyMedium, modifier = Modifier.padding(top = 8.dp))
+                Text(
+                    "operator@gmail.com",
+                    style = MaterialTheme.typography.bodyMedium,
+                    modifier = Modifier.padding(top = 8.dp)
+                )
             }
         }
     }
@@ -136,29 +142,39 @@ class ProfileScreen : Tab, KoinComponent {
     @Preview
     @Composable
     fun GeneralInformation() {
-        Column (
+        Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 16.dp)
                 .padding(horizontal = 16.dp)
         ) {
-            Text("General Informations", style = MaterialTheme.typography.titleMedium)
-            GeneralList()
-            Text("Delete Account", style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.error, fontWeight = FontWeight.W600)
+            Text("General Information", style = MaterialTheme.typography.titleMedium)
+            General()
+            Text(
+                "Delete Account",
+                style = MaterialTheme.typography.bodyLarge,
+                color = MaterialTheme.colorScheme.error,
+                fontWeight = FontWeight.W600
+            )
             Spacer(Modifier.height(12.dp))
-            Text("Logout", style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.error, fontWeight = FontWeight.W600)
+            Text(
+                "Logout",
+                style = MaterialTheme.typography.bodyLarge,
+                color = MaterialTheme.colorScheme.error,
+                fontWeight = FontWeight.W600
+            )
 
         }
     }
 
     @Preview
     @Composable
-    fun GeneralList() {
+    fun General() {
         val screenModel = koinScreenModel<ProfileScreenModel>()
         val navigator = LocalNavigator.currentOrThrow
 
         val items = listOf(
-            "Account Informations",
+            "Account Information",
             "Forgot Password",
             "Change Language",
             "Settings"
