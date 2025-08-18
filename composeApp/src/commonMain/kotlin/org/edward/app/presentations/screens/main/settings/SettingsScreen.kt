@@ -87,7 +87,7 @@ class SettingsScreen : Screen, KoinComponent {
 
         val scope = rememberCoroutineScope()
 
-        fun saveDarlTheme() {
+        fun saveDarkTheme() {
             scope.launch {
                 dataStoreRepository.saveDarkTheme(!isDarkState)
             }
@@ -96,7 +96,7 @@ class SettingsScreen : Screen, KoinComponent {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .clickable { saveDarlTheme() }
+                .clickable { saveDarkTheme() }
                 .padding(vertical = 14.dp, horizontal = 16.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
