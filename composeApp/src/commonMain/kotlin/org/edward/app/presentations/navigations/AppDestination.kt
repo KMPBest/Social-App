@@ -5,12 +5,12 @@ import org.edward.app.presentations.screens.auth.login.LoginScreen
 
 sealed interface AppDestination {
     object Login : AppDestination
-    object Home : AppDestination
+    object MainNav : AppDestination
 }
 
 fun Navigator.navigateTo(destination: AppDestination) {
     when (destination) {
         AppDestination.Login -> this.replace(LoginScreen())
-        AppDestination.Home -> this.replace(BottomNav())
+        AppDestination.MainNav -> this.replace(BottomNav())
     }
 }

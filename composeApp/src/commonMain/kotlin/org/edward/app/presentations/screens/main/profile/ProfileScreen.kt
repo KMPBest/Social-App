@@ -34,6 +34,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
+import cafe.adriel.voyager.koin.koinNavigatorScreenModel
 import cafe.adriel.voyager.koin.koinScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
@@ -58,6 +59,9 @@ class ProfileScreen : Tab, KoinComponent {
     @Preview
     @Composable
     override fun Content() {
+        val navigator = LocalNavigator.currentOrThrow
+        val screenModel = navigator.koinNavigatorScreenModel<ProfileScreenModel>()
+
         Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
             CenterAlignedTopAppBar(title = {
                 Text(
@@ -67,7 +71,7 @@ class ProfileScreen : Tab, KoinComponent {
                 )
             })
             UserInformation()
-            GeneralInformation()
+            GeneralInformation(screenModel::clearDataStore)
         }
     }
 
@@ -93,8 +97,7 @@ class ProfileScreen : Tab, KoinComponent {
                     KamelImage(
                         { asyncPainterResource(url) },
                         contentDescription = url,
-                        modifier = Modifier
-                            .size(80.dp),
+                        modifier = Modifier.size(80.dp),
                         alignment = Alignment.Center,
                         contentScale = ContentScale.Crop,
                         alpha = DefaultAlpha,
@@ -103,8 +106,7 @@ class ProfileScreen : Tab, KoinComponent {
                 }
             } else {
                 Box(
-                    Modifier
-                        .size(80.dp)
+                    Modifier.size(80.dp)
                         .background(MaterialTheme.colorScheme.primary, shape = CircleShape),
                     contentAlignment = Alignment.Center
                 ) {
@@ -134,7 +136,7 @@ class ProfileScreen : Tab, KoinComponent {
 
     @Preview
     @Composable
-    fun GeneralInformation() {
+    fun GeneralInformation(onLogout: () -> Unit) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -154,7 +156,8 @@ class ProfileScreen : Tab, KoinComponent {
                 "Logout",
                 style = MaterialTheme.typography.bodyLarge,
                 color = MaterialTheme.colorScheme.error,
-                fontWeight = FontWeight.W600
+                fontWeight = FontWeight.W600,
+                modifier = Modifier.clickable { onLogout() }
             )
 
         }

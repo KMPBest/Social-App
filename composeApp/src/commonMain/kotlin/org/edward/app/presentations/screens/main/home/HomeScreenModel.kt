@@ -25,9 +25,7 @@ class HomeScreenModel(private val productRepository: ProductRepository) :
     private val _uiState = MutableStateFlow(UiState())
     val uiState: StateFlow<UiState> = _uiState
 
-    fun initData() {
-        if (_uiState.value.products.isNotEmpty())
-            return
+    init {
         loadProducts()
     }
 

@@ -29,6 +29,7 @@ import kotlinx.coroutines.launch
 import org.edward.app.data.local.DataStoreRepository
 import org.edward.app.di.appModule
 import org.edward.app.presentations.navigations.BottomNav
+import org.edward.app.presentations.screens.auth.login.LoginScreen
 import org.edward.app.presentations.screens.components.KeyboardAwareContainer
 import org.edward.app.presentations.theme.AppTheme
 import org.edward.app.shared.initLogger
@@ -46,7 +47,7 @@ internal fun App(context: Any? = null) {
         val dataStoreRepository: DataStoreRepository = getKoin().get<DataStoreRepository>()
         val isDarkState by dataStoreRepository.isDarkTheme().collectAsState(initial = false)
 
-        var entry: Screen = BottomNav()
+        var entry: Screen = LoginScreen()
         var isLoading by remember { mutableStateOf(true) }
 
         val lifecycleOwner = LocalLifecycleOwner.current

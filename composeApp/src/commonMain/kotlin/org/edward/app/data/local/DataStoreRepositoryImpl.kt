@@ -84,4 +84,13 @@ class DataStoreRepositoryImpl(
         }
     }
 
+    override suspend fun clearDataStore() {
+        dataStore.edit { preferences ->
+            preferences.remove(ACCESS_TOKEN)
+            preferences.remove(ACCESS_TOKEN_EXPIRE_TIME)
+            preferences.remove(REFRESH_TOKEN)
+            preferences.remove(REFRESH_TOKEN_EXPIRE_TIME)
+        }
+    }
+
 }

@@ -18,7 +18,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DividerDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -45,6 +44,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.koin.koinScreenModel
+import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.currentOrThrow
+import org.edward.app.presentations.navigations.AppDestination
+import org.edward.app.presentations.navigations.navigateTo
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.core.component.KoinComponent
 
@@ -58,6 +61,8 @@ class LoginScreen : Screen, KoinComponent {
         val uiState by screenModel.uiState.collectAsState()
 
         var passwordVisible by remember { mutableStateOf(false) }
+
+        val navigator = LocalNavigator.currentOrThrow
 
         val gradient = Brush.verticalGradient(colors = listOf(Color(0xFF4A00E0), Color(0xFF8E2DE2)))
 
@@ -135,9 +140,12 @@ class LoginScreen : Screen, KoinComponent {
                 Spacer(modifier = Modifier.height(24.dp))
 
                 Button(
-                    onClick = { },
+                    onClick = {
+                        screenModel.login {
+                            navigator.navigateTo(AppDestination.MainNav)
+                        }
+                    },
                     modifier = Modifier.fillMaxWidth().height(50.dp),
-                    colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent),
                     contentPadding = PaddingValues(),
                     shape = RoundedCornerShape(12.dp)
                 ) {
