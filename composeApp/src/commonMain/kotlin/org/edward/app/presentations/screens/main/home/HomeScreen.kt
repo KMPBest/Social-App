@@ -31,7 +31,9 @@ import androidx.compose.ui.graphics.DefaultAlpha
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
-import cafe.adriel.voyager.koin.koinScreenModel
+import cafe.adriel.voyager.koin.koinNavigatorScreenModel
+import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.currentOrThrow
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabOptions
 import io.kamel.image.KamelImage
@@ -54,7 +56,9 @@ class HomeScreen : Tab, KoinComponent {
     @Composable
     override fun Content() {
 
-        val screenModel = koinScreenModel<HomeScreenModel>()
+        val navigator = LocalNavigator.currentOrThrow
+
+        val screenModel = navigator.koinNavigatorScreenModel<HomeScreenModel>()
 
         val state by screenModel.uiState.collectAsState()
 

@@ -33,7 +33,6 @@ import org.koin.core.component.KoinComponent
 class SettingsScreen : Screen, KoinComponent {
 
     @OptIn(ExperimentalMaterial3Api::class)
-    @Preview
     @Composable
     override fun Content() {
         val screenModel = koinScreenModel<SettingsScreenModel>()
@@ -83,7 +82,7 @@ class SettingsScreen : Screen, KoinComponent {
             )
             Switch(
                 checked = isDarkState,
-                onCheckedChange = { toggleTheme() },
+                onCheckedChange = { _ -> toggleTheme() },
                 enabled = true,
             )
         }
