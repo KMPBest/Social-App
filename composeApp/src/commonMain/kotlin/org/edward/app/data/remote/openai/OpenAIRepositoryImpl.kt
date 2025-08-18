@@ -13,10 +13,13 @@ class OpenAIRepositoryImpl : OpenAIRepository {
 
     override suspend fun ask(message: String): AsyncResult<String> {
         try {
+            val messageBuilder =
+                listOf(ChatMessage(ChatRole.User, message))
+
             val completion = openAI.chatCompletion(
                 request = ChatCompletionRequest(
                     model = ModelId(EnvConfig.OPEN_AI_MODEL),
-                    messages = listOf(ChatMessage(ChatRole.User, message)),
+                    messages = messageBuilder,
                 )
             )
 

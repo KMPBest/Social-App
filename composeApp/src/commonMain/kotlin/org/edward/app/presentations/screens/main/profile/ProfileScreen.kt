@@ -54,28 +54,21 @@ class ProfileScreen : Tab, KoinComponent {
             title = "Profile",
         )
 
+    @OptIn(ExperimentalMaterial3Api::class)
     @Preview
     @Composable
     override fun Content() {
         Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
-            Header()
+            CenterAlignedTopAppBar(title = {
+                Text(
+                    "Account",
+                    fontWeight = FontWeight.W600,
+                    fontSize = TextUnit(18.0.toFloat(), TextUnitType.Sp),
+                )
+            })
             UserInformation()
             GeneralInformation()
         }
-    }
-
-    @OptIn(ExperimentalMaterial3Api::class)
-    @Preview
-    @Composable
-    fun Header() {
-        CenterAlignedTopAppBar(title = {
-            Text(
-                "Account",
-                fontWeight = FontWeight.W600,
-                fontSize = TextUnit(18.0.toFloat(), TextUnitType.Sp),
-            )
-        }
-        )
     }
 
     @Preview
