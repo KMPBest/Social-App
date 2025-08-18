@@ -16,9 +16,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
@@ -26,11 +26,13 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
-import cafe.adriel.voyager.koin.koinScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
+import kotlinx.coroutines.launch
+import org.edward.app.data.local.DataStoreRepository
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.core.component.KoinComponent
+import org.koin.mp.KoinPlatform
 
 class SettingsScreen : Screen, KoinComponent {
 
@@ -38,17 +40,9 @@ class SettingsScreen : Screen, KoinComponent {
     @Composable
     override fun Content() {
 
-        val screenModel = koinScreenModel<SettingsScreenModel>()
-        val state by screenModel.uiState.collectAsState()
-
-        LaunchedEffect(Unit) {
-            screenModel.loadData()
-        }
-
         Column(Modifier.fillMaxWidth()) {
             Header()
-            SettingsList(state, screenModel)
-
+            SettingsList()
         }
 
     }
@@ -85,11 +79,24 @@ class SettingsScreen : Screen, KoinComponent {
 
     @Preview
     @Composable
-    fun SettingsList(state: SettingsScreenModel.SettingsState, screenModel: SettingsScreenModel) {
+    fun SettingsList() {
+
+        val dataStoreRepository: DataStoreRepository =
+            KoinPlatform.getKoin().get<DataStoreRepository>()
+        val isDarkState by dataStoreRepository.isDarkTheme().collectAsState(initial = false)
+
+        val scope = rememberCoroutineScope()
+
+        fun saveDarkTheme() {
+            scope.launch {
+                dataStoreRepository.saveDarkTheme(!isDarkState)
+            }
+        }
+
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .clickable { screenModel.changeTheme() }
+                .clickable { saveDarkTheme() }
                 .padding(vertical = 14.dp, horizontal = 16.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -99,7 +106,7 @@ class SettingsScreen : Screen, KoinComponent {
                 modifier = Modifier.weight(1f)
             )
             Switch(
-                checked = state.isDarkTheme,
+                checked = isDarkState,
                 onCheckedChange = {},
                 enabled = false
             )
