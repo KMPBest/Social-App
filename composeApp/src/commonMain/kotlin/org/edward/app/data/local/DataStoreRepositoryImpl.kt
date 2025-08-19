@@ -7,6 +7,7 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.longPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlin.time.Clock
 import kotlin.time.ExperimentalTime
@@ -73,18 +74,25 @@ class DataStoreRepositoryImpl(
         }
     }
 
-    override fun getTokenData(): Flow<DataStoreRepository.Companion.TokenData> {
-        return dataStore.data.map { preferences ->
-            DataStoreRepository.Companion.TokenData(
-                accessToken = preferences[ACCESS_TOKEN],
-                accessTokenExpiry = preferences[ACCESS_TOKEN_EXPIRE_TIME] ?: 0L,
-                refreshToken = preferences[REFRESH_TOKEN],
-                refreshTokenExpiry = preferences[REFRESH_TOKEN_EXPIRE_TIME] ?: 0L
-            )
-        }
+    override fun getTokenData(): Flow<DataStoreRepository.Companion.TokenData?> {
+        return dataStore.data.map { prefs ->
+            val accessToken = prefs[ACCESS_TOKEN]
+            val accessExpiry = prefs[ACCESS_TOKEN_EXPIRE_TIME] ?: 0L
+            val refreshToken = prefs[REFRESH_TOKEN]
+            val refreshExpiry = prefs[REFRESH_TOKEN_EXPIRE_TIME] ?: 0L
+
+            if (accessToken != null && refreshToken != null) {
+                DataStoreRepository.Companion.TokenData(
+                    accessToken,
+                    accessExpiry,
+                    refreshToken,
+                    refreshExpiry
+                )
+            } else null
+        }.distinctUntilChanged()
     }
 
-    override suspend fun clearDataStore() {
+    override suspend fun clearToken() {
         dataStore.edit { preferences ->
             preferences.remove(ACCESS_TOKEN)
             preferences.remove(ACCESS_TOKEN_EXPIRE_TIME)

@@ -47,8 +47,8 @@ internal fun App(context: Any? = null) {
         val dataStoreRepository: DataStoreRepository = getKoin().get<DataStoreRepository>()
         val isDarkState by dataStoreRepository.isDarkTheme().collectAsState(initial = false)
 
-        var entry: Screen = LoginScreen()
         var isLoading by remember { mutableStateOf(true) }
+        var entry: Screen by remember { mutableStateOf(LoginScreen()) }
 
         val lifecycleOwner = LocalLifecycleOwner.current
         val coroutineScope = rememberCoroutineScope()
@@ -94,13 +94,13 @@ private suspend fun checkTokenValidity(
     Napier.i { "Checking token validity..." }
     val tokenData = dataStoreRepository.getTokenData().firstOrNull()
 
-    if (tokenData == null) {
+    if (tokenData == null || tokenData.accessToken.isNullOrEmpty()) {
         Napier.w("Token data is null, cannot check validity.")
         return false
     }
 
     if (tokenData.accessTokenExpiry <= Clock.System.now().epochSeconds && tokenData.refreshTokenExpiry <= Clock.System.now().epochSeconds) {
-        Napier.w("Access token and refresh token are both expired.")
+        dataStoreRepository.clearToken()
         return false
     }
 

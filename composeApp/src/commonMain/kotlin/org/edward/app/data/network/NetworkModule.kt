@@ -60,7 +60,7 @@ val networkModule = module {
                 bearer {
                     loadTokens {
                         val tokenData = dataStoreRepository.getTokenData().first()
-                        tokenData.accessToken?.let { access ->
+                        tokenData?.accessToken?.let { access ->
                             BearerTokens(
                                 accessToken = access,
                                 refreshToken = tokenData.refreshToken ?: ""

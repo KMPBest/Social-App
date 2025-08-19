@@ -42,6 +42,8 @@ import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabOptions
 import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
+import org.edward.app.presentations.navigations.RootAppDestination
+import org.edward.app.presentations.navigations.replaceAll
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.core.component.KoinComponent
 
@@ -71,7 +73,11 @@ class ProfileScreen : Tab, KoinComponent {
                 )
             })
             UserInformation()
-            GeneralInformation(screenModel::clearDataStore)
+            GeneralInformation {
+                screenModel.clearDataStore {
+                    navigator.parent?.replaceAll(RootAppDestination.Login)
+                }
+            }
         }
     }
 

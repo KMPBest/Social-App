@@ -46,7 +46,7 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.koin.koinScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
-import org.edward.app.presentations.navigations.AppDestination
+import org.edward.app.presentations.navigations.RootAppDestination
 import org.edward.app.presentations.navigations.navigateTo
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.core.component.KoinComponent
@@ -142,7 +142,7 @@ class LoginScreen : Screen, KoinComponent {
                 Button(
                     onClick = {
                         screenModel.login {
-                            navigator.navigateTo(AppDestination.MainNav)
+                            navigator.navigateTo(RootAppDestination.MainNav)
                         }
                     },
                     modifier = Modifier.fillMaxWidth().height(50.dp),

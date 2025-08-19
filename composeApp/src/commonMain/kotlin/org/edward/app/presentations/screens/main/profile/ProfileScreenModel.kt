@@ -20,9 +20,10 @@ class ProfileScreenModel(private val dataStoreRepository: DataStoreRepository) :
         }
     }
 
-    fun clearDataStore() {
+    fun clearDataStore(onSuccess: () -> Unit) {
         screenModelScope.launch {
-            dataStoreRepository.clearDataStore()
+            dataStoreRepository.clearToken()
+            onSuccess()
         }
     }
 }

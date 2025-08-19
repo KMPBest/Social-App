@@ -18,6 +18,6 @@ interface DataStoreRepository {
     fun getAccessToken(): Flow<String?>
     suspend fun saveRefreshToken(token: String, ttl: Long)
     fun getRefreshToken(): Flow<String?>
-    fun getTokenData(): Flow<TokenData>
-    suspend fun clearDataStore()
+    fun getTokenData(): Flow<TokenData?>
+    suspend fun clearToken()
 }
