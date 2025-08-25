@@ -71,7 +71,6 @@ kotlin {
             implementation(libs.ktor.auth)
 
             // Kotlinx coroutines
-            implementation(libs.kotlinx.coroutines.core)
 
             // DataStore
             implementation(libs.dataStore)
@@ -90,13 +89,11 @@ kotlin {
             implementation(kotlin("test"))
             @OptIn(ExperimentalComposeLibrary::class)
             implementation(compose.uiTest)
-            implementation(libs.kotlinx.coroutines.test)
         }
 
         androidMain.dependencies {
             implementation(compose.uiTooling)
             implementation(libs.androidx.activityCompose)
-            implementation(libs.kotlinx.coroutines.android)
             implementation(libs.ktor.client.okhttp)
         }
 
