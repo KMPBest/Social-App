@@ -1,7 +1,7 @@
 [versions]
 
 kamelImage = "1.0.7"
-kotlin = "2.2.10"
+kotlin = "2.2.0"
 compose = "1.8.2"
 agp = "8.12.0"
 androidx-activityCompose = "1.10.1"
@@ -11,7 +11,6 @@ openaiClient = "4.0.1"
 voyager = "1.1.0-beta03"
 napier = "2.7.1"
 buildConfig = "5.6.7"
-kotlinx-coroutines = "1.10.2"
 ktor = "3.2.3"
 kotlinx-datetime = "0.7.1"
 koin = "4.1.0"
@@ -51,10 +50,6 @@ voyager-tab-navigator = { module = "cafe.adriel.voyager:voyager-tab-navigator", 
 voyager-screenModel = { module = "cafe.adriel.voyager:voyager-screenmodel", version.ref = "voyager" }
 voyager-koin = { module = "cafe.adriel.voyager:voyager-koin", version.ref = "voyager" }
 
-# Kotlin Coroutines
-kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
-kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinx-coroutines" }
-kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinx-coroutines" }
 
 # DataStore
 dataStore = { module = "androidx.datastore:datastore", version.ref = "dataStore" }
