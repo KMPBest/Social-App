@@ -1,6 +1,5 @@
 package org.edward.app.presentations.theme
 
-import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.darkColorScheme
@@ -241,7 +240,6 @@ private val highContrastDarkColorScheme = darkColorScheme(
 
 internal val LocalThemeIsDark = compositionLocalOf { mutableStateOf(true) }
 
-@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 internal fun AppTheme(
     isDark: Boolean,

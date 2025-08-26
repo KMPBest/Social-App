@@ -5,8 +5,7 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.windowInsetsPadding
-import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
-import androidx.compose.material3.LoadingIndicator
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.collectAsState
@@ -38,7 +37,6 @@ import org.koin.mp.KoinPlatform.getKoin
 import kotlin.time.Clock
 import kotlin.time.ExperimentalTime
 
-@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 internal fun App(context: Any? = null) {
     initLogger()
@@ -76,7 +74,7 @@ internal fun App(context: Any? = null) {
                 content = {
                     if (isLoading) {
                         Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                            LoadingIndicator()
+                            LinearProgressIndicator()
                         }
                     } else {
                         Navigator(entry)
