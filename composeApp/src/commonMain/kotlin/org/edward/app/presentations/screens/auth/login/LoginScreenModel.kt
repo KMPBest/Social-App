@@ -55,6 +55,7 @@ class LoginScreenModel(
                 )) {
                 is AsyncResult.Success -> {
                     dataStoreRepository.saveAccessToken(result.data.token, 3600)
+                    dataStoreRepository.saveRefreshToken(result.data.token, 86400)
                     _uiState.value = _uiState.value.copy(isLoading = false)
                     onSuccess()
                 }

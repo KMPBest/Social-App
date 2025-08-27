@@ -3,7 +3,7 @@ package org.edward.app
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.safeDrawing
+import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.runtime.Composable
@@ -27,7 +27,7 @@ import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import org.edward.app.data.local.DataStoreRepository
 import org.edward.app.di.appModule
-import org.edward.app.presentations.navigations.BottomNav
+import org.edward.app.presentations.navigations.FancyDrawerNav
 import org.edward.app.presentations.screens.auth.login.LoginScreen
 import org.edward.app.presentations.screens.components.KeyboardAwareContainer
 import org.edward.app.presentations.theme.AppTheme
@@ -57,7 +57,7 @@ internal fun App(context: Any? = null) {
                     coroutineScope.launch {
                         checkTokenValidity(dataStoreRepository).also {
                             if (it) {
-                                entry = BottomNav()
+                                entry = FancyDrawerNav()
                             }
                             isLoading = false
                         }
@@ -70,7 +70,7 @@ internal fun App(context: Any? = null) {
 
         AppTheme(isDarkState) {
             KeyboardAwareContainer(
-                modifier = Modifier.fillMaxSize().windowInsetsPadding(WindowInsets.safeDrawing),
+                modifier = Modifier.fillMaxSize().windowInsetsPadding(WindowInsets.statusBars),
                 content = {
                     if (isLoading) {
                         Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
@@ -102,7 +102,7 @@ private suspend fun checkTokenValidity(
         return false
     }
 
-    if (Clock.System.now().epochSeconds < tokenData.refreshTokenExpiry) {
+    if (Clock.System.now().epochSeconds < tokenData.refreshTokenExpiry && tokenData.accessTokenExpiry <= Clock.System.now().epochSeconds) {
         Napier.i { "Access token is expired, but refresh token is valid. Refreshing access token..." }
         delay(5000)
         dataStoreRepository.saveAccessToken("new_access_token_123", 3600)

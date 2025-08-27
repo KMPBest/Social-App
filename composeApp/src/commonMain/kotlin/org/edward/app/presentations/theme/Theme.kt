@@ -249,9 +249,7 @@ internal fun AppTheme(
 
         SystemAppearance(!isDark)
 
-        MaterialTheme(
-            colorScheme = if (isDark) darkScheme else lightScheme
-        ) {
+        MaterialTheme(colorScheme = if (isDark) darkScheme else lightScheme) {
             Surface(content = content)
         }
 

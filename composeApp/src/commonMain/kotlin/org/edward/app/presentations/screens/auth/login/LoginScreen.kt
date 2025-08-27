@@ -31,8 +31,8 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -47,7 +47,6 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.draw.scale
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.text.font.FontWeight
@@ -66,7 +65,7 @@ import multiplatform_app.composeapp.generated.resources.facebook
 import multiplatform_app.composeapp.generated.resources.google
 import multiplatform_app.composeapp.generated.resources.ic_cyclone
 import org.edward.app.presentations.navigations.RootAppDestination
-import org.edward.app.presentations.navigations.navigateTo
+import org.edward.app.presentations.navigations.replaceAll
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -84,8 +83,6 @@ class LoginScreen : Screen, KoinComponent {
         var passwordVisible by remember { mutableStateOf(false) }
 
         val navigator = LocalNavigator.currentOrThrow
-
-        Brush.verticalGradient(colors = listOf(Color(0xFF4A00E0), Color(0xFF8E2DE2)))
 
         val scope = rememberCoroutineScope()
 
@@ -157,11 +154,12 @@ class LoginScreen : Screen, KoinComponent {
             ) {
 
                 Text("Welcome Back", fontSize = 22.sp, fontWeight = FontWeight.Bold)
+
                 Text("Enter your details below", fontSize = 14.sp, color = Color.Gray)
 
                 Spacer(modifier = Modifier.height(24.dp))
 
-                TextField(
+                OutlinedTextField(
                     value = uiState.email,
                     onValueChange = screenModel::onEmailChange,
                     placeholder = { Text("Enter your email") },
@@ -171,12 +169,13 @@ class LoginScreen : Screen, KoinComponent {
                     shape = RoundedCornerShape(8.dp),
                     leadingIcon = { Icon(Icons.Default.Email, contentDescription = null) },
                 )
+
                 Spacer(modifier = Modifier.height(16.dp))
 
-                TextField(
+                OutlinedTextField(
                     value = uiState.password,
                     onValueChange = screenModel::onPasswordChange,
-//                    placeholder = { Text("Enter your password") },
+                    placeholder = { Text("Enter your password") },
                     label = { Text("Password") },
                     modifier = Modifier.fillMaxWidth(),
                     singleLine = true,
@@ -193,15 +192,6 @@ class LoginScreen : Screen, KoinComponent {
                     },
                 )
 
-//                OutlinedTextField(
-//                    value = uiState.password,
-//                    onValueChange = screenModel::onPasswordChange,
-//                    label = { Text("Password") },
-//                    singleLine = true,
-//
-//                    modifier = Modifier.fillMaxWidth()
-//                )
-
                 Spacer(modifier = Modifier.height(12.dp))
 
                 Text(
@@ -215,8 +205,8 @@ class LoginScreen : Screen, KoinComponent {
 
                 Button(
                     onClick = {
-                        screenModel.login {
-                            navigator.navigateTo(RootAppDestination.MainNav)
+                        screenModel::login {
+                            navigator.replaceAll(RootAppDestination.MainNav)
                         }
                     },
                     modifier = Modifier.fillMaxWidth().height(50.dp),
@@ -252,9 +242,6 @@ class LoginScreen : Screen, KoinComponent {
                             .padding(horizontal = 4.dp, vertical = 6.dp)
                     )
                 }
-
-
-
 
                 Spacer(modifier = Modifier.height(24.dp))
 
