@@ -4,11 +4,16 @@ import kotlinx.coroutines.flow.Flow
 
 interface DataStoreRepository {
     companion object {
+        enum class NavType {
+            Bottom, Drawer, FancyDrawer
+        }
+
         data class TokenData(
             val accessToken: String?,
             val accessTokenExpiry: Long,
             val refreshToken: String?,
-            val refreshTokenExpiry: Long
+            val refreshTokenExpiry: Long,
+            val navType: NavType = NavType.Bottom,
         )
     }
 
@@ -19,5 +24,7 @@ interface DataStoreRepository {
     suspend fun saveRefreshToken(token: String, ttl: Long)
     fun getRefreshToken(): Flow<String?>
     fun getTokenData(): Flow<TokenData?>
+    suspend fun saveNavType(navType: NavType)
+    fun getNavType(): Flow<NavType>
     suspend fun clearToken()
 }

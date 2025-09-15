@@ -22,6 +22,8 @@ class DataStoreRepositoryImpl(
         val ACCESS_TOKEN_EXPIRE_TIME = longPreferencesKey("access_token_expire_time")
         val REFRESH_TOKEN = stringPreferencesKey("refresh_token")
         val REFRESH_TOKEN_EXPIRE_TIME = longPreferencesKey("refresh_token_expire_time")
+
+        val NAV_TYPE = stringPreferencesKey("nav_type")
     }
 
     override suspend fun saveDarkTheme(isDark: Boolean) {
@@ -90,6 +92,20 @@ class DataStoreRepositoryImpl(
                 )
             } else null
         }.distinctUntilChanged()
+    }
+
+    override suspend fun saveNavType(navType: DataStoreRepository.Companion.NavType) {
+        dataStore.edit { preferences ->
+            preferences[NAV_TYPE] = navType.name
+        }
+    }
+
+    override fun getNavType(): Flow<DataStoreRepository.Companion.NavType> {
+        return dataStore.data.map { preferences ->
+            preferences[NAV_TYPE]?.let {
+                DataStoreRepository.Companion.NavType.valueOf(it)
+            } ?: DataStoreRepository.Companion.NavType.Bottom
+        }
     }
 
     override suspend fun clearToken() {

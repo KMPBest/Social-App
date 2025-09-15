@@ -49,7 +49,7 @@ class FancyDrawerNav(private val firstScreen: Tab = HomeScreen()) : Screen {
         TabNavigator(firstScreen) {
             SlidingRootDrawer(
                 drawerContent = { closeDrawer ->
-                    DrawerTabItem(HomeScreen(), LocalTabNavigator.current, closeDrawer)
+                    DrawerTabItem(firstScreen, LocalTabNavigator.current, closeDrawer)
                     DrawerTabItem(ProfileScreen(), LocalTabNavigator.current, closeDrawer)
                 }
             ) {

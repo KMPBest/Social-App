@@ -1,6 +1,5 @@
 package org.edward.app.presentations.navigations
 
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.DrawerValue
@@ -37,15 +36,13 @@ class DrawerNav(private val firstScreen: Tab = HomeScreen()) : Screen {
                 drawerState = drawerState,
                 drawerContent = {
                     ModalDrawerSheet {
-                        DrawerTabItem(HomeScreen(), tabNavigator, drawerState, scope)
+                        DrawerTabItem(firstScreen, tabNavigator, drawerState, scope)
                         DrawerTabItem(ProfileScreen(), tabNavigator, drawerState, scope)
                     }
                 }
             ) {
                 Scaffold { innerPadding ->
-                    Box(Modifier.padding(innerPadding)) {
-                        CurrentTab()
-                    }
+                    CurrentTab()
                 }
             }
         }

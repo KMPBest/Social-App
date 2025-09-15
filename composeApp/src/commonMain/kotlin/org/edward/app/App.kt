@@ -44,7 +44,6 @@ internal fun App(context: Any? = null) {
 
         val dataStoreRepository: DataStoreRepository = getKoin().get<DataStoreRepository>()
         val isDarkState by dataStoreRepository.isDarkTheme().collectAsState(initial = false)
-
         var isLoading by remember { mutableStateOf(true) }
         var entry: Screen by remember { mutableStateOf(LoginScreen()) }
 
@@ -86,9 +85,7 @@ internal fun App(context: Any? = null) {
 }
 
 @OptIn(ExperimentalTime::class)
-private suspend fun checkTokenValidity(
-    dataStoreRepository: DataStoreRepository
-): Boolean {
+private suspend fun checkTokenValidity(dataStoreRepository: DataStoreRepository): Boolean {
     Napier.i { "Checking token validity..." }
     val tokenData = dataStoreRepository.getTokenData().firstOrNull()
 
@@ -105,10 +102,12 @@ private suspend fun checkTokenValidity(
     if (Clock.System.now().epochSeconds < tokenData.refreshTokenExpiry && tokenData.accessTokenExpiry <= Clock.System.now().epochSeconds) {
         Napier.i { "Access token is expired, but refresh token is valid. Refreshing access token..." }
         delay(5000)
-        dataStoreRepository.saveAccessToken("new_access_token_123", 3600)
-        dataStoreRepository.saveRefreshToken("new_refresh_token_456", 7200)
+        dataStoreRepository.saveAccessToken("new_access_token_123", 3600 * 24 * 7)
+        dataStoreRepository.saveRefreshToken("new_refresh_token_456", 3600 * 24 * 30)
         Napier.i { "Access token refreshed successfully." }
     }
+
+    Napier.i { "Token check completed. Token is valid." }
 
     return true
 }

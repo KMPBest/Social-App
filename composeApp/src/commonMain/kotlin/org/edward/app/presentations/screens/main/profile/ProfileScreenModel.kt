@@ -5,7 +5,7 @@ import cafe.adriel.voyager.core.model.screenModelScope
 import cafe.adriel.voyager.navigator.Navigator
 import kotlinx.coroutines.launch
 import org.edward.app.data.local.DataStoreRepository
-import org.edward.app.presentations.screens.main.settings.SettingsScreen
+import org.edward.app.presentations.screens.main.profile.settings.SettingsScreen
 import org.koin.core.component.KoinComponent
 
 class ProfileScreenModel(private val dataStoreRepository: DataStoreRepository) :

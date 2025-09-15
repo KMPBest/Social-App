@@ -80,10 +80,7 @@ class HomeScreen : Tab, KoinComponent {
                     isRefreshing = state.isRefreshing,
                     onRefresh = { screenModel.onPullToRefreshTrigger() },
                 ) {
-                    LazyColumn(
-//                        modifier = Modifier.fillMaxSize().padding(8.dp),
-                        verticalArrangement = Arrangement.spacedBy(8.dp)
-                    ) {
+                    LazyColumn(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                         items(state.products) { product ->
                             ProductCard(product)
                         }
